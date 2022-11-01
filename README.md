@@ -1,4 +1,13 @@
-# Book Store API Web Server
+# Book Store API Web Application Project
+
+## Index  
+- [R1 - Identification of the problem you are trying to solve by building this particular app](#r1---identification-of-the-problem-you-are-trying-to-solve-by-building-this-particular-app)  
+- [R2 - Why is it a problem that needs solving](#r2-–-why-is-it-a-problem-that-needs-solving)  
+- [R3 - Why have you chosen this database system. What are the drawbacks compared to others?](#r3---why-have-you-chosen-this-database-system-what-are-the-drawbacks-compared-to-others)  
+- [R4 - Identify and discuss the key functionalities and benefits of an ORM](#r4---identify-and-discuss-the-key-functionalities-and-benefits-of-an-orm)  
+- [R6 - Make an ERD for the app](#r6---make-an-erd-for-the-app)  
+- [R8 - Discuss the database relations to be implemented in your application](#r8---discuss-the-database-relations-to-be-implemented-in-your-application)
+[]()
 
 ## R1 - Identification of the problem you are trying to solve by building this particular app.
 
@@ -6,7 +15,7 @@ A book store requires a inventory system that will allow employees to easily fin
 
 ## R2 – Why is it a problem that needs solving?
 
-The inventory system is needed to help employees save time when serving customers in many different ways. Employees will be able to quickly find specific books when customers inquire if it is in stock, and if it is not in stock, they will be able to quickly recommend similar books to the customer, based on other titles by the same author, or similar books in the same style. Employees will also be able to give customers a quick overview of a book from the internal review system. This will not only reduce the work load on the employees, it will also add to the customer experience, without needing the employee to read and memorise all of the titles within the store. Managers tasks will be made easier as they will be able to check inventory levels along with being able to disseminating talking points throughout the staff that they would like to emphasise on certain titles to increase sales using the review system. 
+The inventory system is needed to help employees save time when serving customers in many different ways. Employees will be able to quickly find specific books when customers inquire if it is in stock, and if it is not in stock, they will be able to quickly recommend similar books to the customer, based on other titles by the same author, or similar books in the same style. Employees will also be able to give customers a quick overview of a book from the internal review system. This will not only reduce the work load on the employees, it will also add to the customer experience, without needing the employee to read and memorise all of the titles within the store. Managers tasks will be made easier as they will be able to check inventory levels along with being able to disseminating talking points throughout the staff that they would like to emphasise on certain titles to increase sales using the review system.  
 
 ## R3 -  Why have you chosen this database system. What are the drawbacks compared to others?
 
@@ -40,4 +49,9 @@ The ‘Authors’ table will contain the attributes about the author, such as th
 
 The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category itself (String, varchar(100)) and a short description about the category called ‘description’ (Text). 
 
-The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment itself (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.
+The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment itself (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.  
+
+## R10 - Describe the way tasks are allocated and tracked in your project
+
+Link to my Trello Board used for this project:  
+[API Project Trello Board](https://trello.com/b/muUAZRzW/api-assignment)
