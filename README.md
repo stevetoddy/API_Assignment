@@ -6,8 +6,8 @@
 - [R3 - Why have you chosen this database system. What are the drawbacks compared to others?](#r3---why-have-you-chosen-this-database-system-what-are-the-drawbacks-compared-to-others)  
 - [R4 - Identify and discuss the key functionalities and benefits of an ORM](#r4---identify-and-discuss-the-key-functionalities-and-benefits-of-an-orm)  
 - [R6 - Make an ERD for the app](#r6---make-an-erd-for-the-app)  
-- [R8 - Discuss the database relations to be implemented in your application](#r8---discuss-the-database-relations-to-be-implemented-in-your-application)
-[]()
+- [R8 - Discuss the database relations to be implemented in your application](#r8---discuss-the-database-relations-to-be-implemented-in-your-application)  
+- [R10 - Describe the way tasks are allocated and tracked in your project](#r10---describe-the-way-tasks-are-allocated-and-tracked-in-your-project)
 
 ## R1 - Identification of the problem you are trying to solve by building this particular app.
 
