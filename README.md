@@ -25,3 +25,19 @@ ORMs can make accessing data much easier. They map out how certain objects will 
 Another very important and welcome feature of an ORM is that it increases your databases security, reducing the possibility of SQL injection threats. This is because of the layer of abstraction an ORM gives a database, forcing outside queries through the ORM before it can make it to the database itself. Of course, this is not perfect and ORM injection can happen. 
 
 Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all. 
+
+## R6 - Make an ERD for the app
+This is my ERD for my Book Store application. 
+![Book_Store_ERD](Images/Book_Store_ERD.png)
+
+## R8 - Discuss the database relations to be implemented in your application
+
+My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50)), last name (String, varchar(50)) and whether the user has Admin access or not (Boolean, NOT NULL, Default FALSE). 
+
+The second table will be ‘Books’, with attributes such as the unique Book ID (Integer, NOT NULL), the books title (String, varchar(200)), if it is fiction (Boolean), if it is kid friendly (Boolean) and the number of copies in store (Integer). The ‘Books’ table will also have two Foreign Keys, an Author ID (Integer, NOT NULL), which will connect to a table called ‘Authors’ with a one and only one on the authors side to an optional many on the books side, and a Category ID (Integer, NOT NULL), which will connect to a table called ‘Categories’ with a one and only one on the categories side to an optional many on the books side. 
+
+The ‘Authors’ table will contain the attributes about the author, such as the unique Author ID (Integer, NOT NULL), the author’s first name (String, varchar(50)), last name (String, varchar(50)), any accolades they may have garnered (Text) and a short description called ‘about’ (Text). 
+
+The ‘Categories’ table will contain attributes such as  the unique Category ID (Integer, NOT NULL), the category itself (String, varchar(100)) and a short description about the category called ‘description’ (Text). 
+
+The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the unique Comment ID (Integer, NOT NULL), the comment itself (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.
