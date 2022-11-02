@@ -1,11 +1,18 @@
 from flask import Flask
-from init import db, ma
+from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+# Function to define our app
+def create_app():
+    app = Flask(__name__)
 
+    # Getting our database link from our environment variables 
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
-@app.route('/')
-def index():
-    return 'Hello world'
+    db = SQLAlchemy(app)
 
+    @app.route('/')
+    def index():
+        return 'Hey'
+
+    return app
