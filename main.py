@@ -9,6 +9,15 @@ import os
 def create_app():
     app = Flask(__name__)
 
+    # Error handlers 
+    @app.errorhandler(400)
+    def bad_request(err):
+        return {"error": str(err)}, 400
+    
+    @app.errorhandler(404)
+    def not_found(err):
+        return {"error": str(err)}, 404
+
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     
@@ -21,56 +30,6 @@ def create_app():
     # Connecting Blueprints to app
     app.register_blueprint(books_bp)
 
-    # @app.cli.command('create')
-    # def create_db():
-    #     db.create_all()
-    #     print("Tables created")
-
-    @app.cli.command('seed')
-    def seed_db():
-        books = [
-            Book(
-                title = 'Name of the wind',
-                is_fiction = True,
-                is_kid_friendly = False,
-                in_store = 0
-            ),
-            Book(
-                title = 'The Wise Man\'s Fear',
-                is_fiction = True,
-                is_kid_friendly = False,
-                in_store = 2
-            ),
-            Book(
-                title = 'The Way of Kings',
-                is_fiction = True,
-                is_kid_friendly = False,
-                in_store = 4
-            ),
-            Book(
-                title = 'Catch 22',
-                is_fiction = True,
-                is_kid_friendly = False,
-                in_store = 2
-            ),
-            Book(
-                title = 'Cat in the Hat',
-                is_fiction = True,
-                is_kid_friendly = True,
-                in_store = 5
-            ),
-            Book(
-                title = 'Oxford English Dictionary',
-                is_fiction = False,
-                is_kid_friendly = True,
-                in_store = 9
-            )
-        ]
-
-        db.session.add_all(books)
-        db.session.commit()
-
-    print('Tables seeded')
     
     # Must return the app so Flask can recognise it 
     return app
