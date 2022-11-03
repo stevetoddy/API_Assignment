@@ -2,7 +2,7 @@ from flask import Blueprint
 from init import db
 from models.book import Book
 from models.user import User
-# from models.comment import Comment
+from models.comment import Comment
 from models.author import Author
 from models.category import Category 
 
@@ -143,6 +143,7 @@ def seed_db():
     db.session.add_all(authors)
     db.session.commit()
 
+
     categories = [
         Category(
             name = 'Fantasy',
@@ -168,5 +169,28 @@ def seed_db():
     # Add and commit all seeded categories
     db.session.add_all(categories)
     db.session.commit()
+    
+
+    comments = [
+        Comment(
+            body = 'Comment 1',
+        ),
+        Comment(
+            body = 'Comment 2',
+        ),        
+        Comment(
+            body = 'Comment 3',
+        ),        
+        Comment(
+            body = 'Comment 4',
+        ),
+        Comment(
+            body = 'Comment 5',
+        )
+        ]
+    # Add and commit all seeded categories
+    db.session.add_all(comments)
+    db.session.commit()
+
 
     print('Tables seeded')

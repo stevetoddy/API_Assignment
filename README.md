@@ -36,8 +36,8 @@ Another very important and welcome feature of an ORM is that it increases your d
 Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all. 
 
 ## R6 - Make an ERD for the app
-This is my ERD for my Book Store application. 
-![Book_Store_ERD](Images/Book_Store_ERD.png)
+This is my ERD for my Book Store application.  
+![Book_Store_ERD](Images/book_store_ERD2.png)
 
 ## R8 - Discuss the database relations to be implemented in your application
 
