@@ -39,7 +39,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 This is my ERD for my Book Store application.  
 ![Book_Store_ERD](Images/book_store_ERD2.png)
 
-## R8 - Discuss the database relations to be implemented in your application
+## R9 - Discuss the database relations to be implemented in your application
 
 My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the table’s Primary Key, the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50)), last name (String, varchar(50)) and whether the user has Admin access or not (Boolean, NOT NULL, Default FALSE). 
 
@@ -47,9 +47,9 @@ The second table will be ‘Books’, with attributes such as the table’s Prim
 
 The ‘Authors’ table will contain the attributes about the author, such as the table’s Primary Key, the unique Author ID (Integer, NOT NULL), the author’s first name (String, varchar(50)), last name (String, varchar(50)), any accolades they may have garnered (Text) and a short description called ‘about’ (Text). 
 
-The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category itself (String, varchar(100)) and a short description about the category called ‘description’ (Text). 
+The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category name (String, varchar(100)) and a short description about the category called ‘description’ (Text). 
 
-The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment itself (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.  
+The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment body (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.  
 
 ## R10 - Describe the way tasks are allocated and tracked in your project
 
