@@ -2,6 +2,8 @@ from flask import Flask
 from init import db, ma
 from flask_sqlalchemy import SQLAlchemy
 from controllers.books_controller import books_bp
+from controllers.users_controller import users_bp
+from controllers.cli_controller import db_commands
 from models.book import Book, BookSchema
 import os
 
@@ -18,6 +20,10 @@ def create_app():
     def not_found(err):
         return {"error": str(err)}, 404
 
+    @app.errorhandler(405)
+    def method_not_allowed(err):
+        return {"error": str(err)}, 405
+
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     
@@ -29,6 +35,8 @@ def create_app():
 
     # Connecting Blueprints to app
     app.register_blueprint(books_bp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(db_commands)
 
     
     # Must return the app so Flask can recognise it 

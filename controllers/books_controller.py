@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from init import db, ma
+from init import db
 from models.book import Book, BookSchema
 
 books_bp = Blueprint('books', __name__, url_prefix='/books')
@@ -22,7 +22,7 @@ def one_book(id):
         return {'error': f'No book with id {id}'}, 404
 
 # Get one book by Title
-@books_bp.route('/title/<string:title>', methods=['GET'])
+@books_bp.route('/<string:title>', methods=['GET'])
 def title_book(title):
     stmt = db.select(Book).filter_by(title=title)
     book = db.session.scalar(stmt)
@@ -54,16 +54,17 @@ def update_one_book(id):
     book = db.session.scalar(stmt)
     if book:
         book.title = request.json.get('title') or book.title
-        book.is_fiction  = request.json.get('is_fiction') or book.is_fiction
+        # Try block for Boolean values
+        try:
+            book.is_fiction = request.json['is_fiction'] 
+        except:
+            book.is_fiction = book.is_fiction
+        # Try block for Boolean values
+        try:
+            book.is_kid_friendly  = request.json['is_kid_friendly']
+        except:
+            book.is_kid_friendly = book.is_kid_friendly
 
-        # if book.is_fiction is not None: 
-        #     book.is_fiction = request.json.get('is_fiction') 
-        # # elif book.is_fiction != "1":
-        # #     book.is_fiction = request.json.get('is_fiction')
-        # else: 
-        #     book.is_fiction
-
-        book.is_kid_friendly  = request.json.get('is_kid_friendly') or book.is_kid_friendly
         book.in_store = request.json.get('in_store') or book.in_store
         db.session.commit()
         return BookSchema().dump(book)
@@ -79,6 +80,6 @@ def delete_one_book(id):
     if book:
         db.session.delete(book)
         db.session.commit()
-        return {'message': 'Book deleted successfully'}
+        return {'message': f"Book '{book.title}' deleted successfully"}
     else:
         return {'error': f'No book with id {id}'}, 404

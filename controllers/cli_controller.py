@@ -1,7 +1,7 @@
 from flask import Blueprint
 from init import db
 from models.book import Book
-# from models.user import User
+from models.user import User
 # from models.comment import Comment
 # from models.author import Authors
 # from models.category import Categories 
@@ -9,7 +9,7 @@ from models.book import Book
 
 db_commands = Blueprint('db', __name__)
 
-
+# Create the database
 @db_commands.cli.command('create')
 def create_db():
     db.create_all()
@@ -60,8 +60,39 @@ def seed_db():
             in_store = 9
         )
         ]
-
+    # Add and commit all seeded books
     db.session.add_all(books)
+    db.session.commit()
+
+    users = [
+        User(
+            first_name = 'Steve',
+            last_name = 'Todorovic',
+            is_admin = True
+        ),        
+        User(
+            first_name = 'Denna',
+            last_name = 'Thomas',
+            is_admin = False
+        ),
+        User(
+            first_name = 'Sebastian',
+            last_name = 'Townsend',
+            is_admin = False
+        ),
+        User(
+            first_name = 'Ben',
+            last_name = 'Abenathy',
+            is_admin = False
+        ),
+        User(
+            first_name = 'Simon',
+            last_name = 'Williams',
+            is_admin = False
+        ),
+        ]
+    # Add and commit all seeded users
+    db.session.add_all(users)
     db.session.commit()
 
     print('Tables seeded')
