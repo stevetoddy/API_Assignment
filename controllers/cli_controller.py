@@ -4,7 +4,7 @@ from models.book import Book
 from models.user import User
 # from models.comment import Comment
 from models.author import Author
-# from models.category import Categories 
+from models.category import Category 
 
 
 db_commands = Blueprint('db', __name__)
@@ -48,10 +48,22 @@ def seed_db():
             in_store = 2
         ),
         Book(
+            title = 'Excession',
+            is_fiction = True,
+            is_kid_friendly = False,
+            in_store = 3
+        ),
+        Book(
             title = 'Cat in the Hat',
             is_fiction = True,
             is_kid_friendly = True,
             in_store = 5
+        ),
+        Book(
+            title = 'Automate the Boring Stuff with Python',
+            is_fiction = False,
+            is_kid_friendly = True,
+            in_store = 1
         )
         ]
     # Add and commit all seeded books
@@ -114,9 +126,47 @@ def seed_db():
             accolades = 'Although Catch-22 won no awards, it has remained consistently in print and, since publication, has sold more than 10m copies.',
             about = 'Joseph Heller was an American author of novels, short stories, plays, and screenplays. His best-known work is the 1961 novel Catch-22, a satire on war and bureaucracy, whose title has become a synonym for an absurd or contradictory choice.'
         ),
+        Author(
+            first_name = 'Iain',
+            last_name = 'Banks',
+            accolades = 'Iain has been nominated for Hugo, Arthur C. Clark, Prometheus and Goodreads awards among others',
+            about = 'Iain Banks was a Scottish author, writing mainstream fiction as Iain Banks and science fiction as Iain M. Banks.'
+        ),
+        Author(
+            first_name = 'Al',
+            last_name = 'Sweigart',
+            accolades = 'Sweigart has written several bestselling programming books for beginners, including Automate the Boring Stuff with Python.',
+            about = 'Al Sweigart is a professional software developer who teaches programming to kids and adults.'
+        )
         ]
     # Add and commit all seeded authors
     db.session.add_all(authors)
+    db.session.commit()
+
+    categories = [
+        Category(
+            name = 'Fantasy',
+            description = 'Imaginative fiction dependent for effect on strangeness of setting (such as other worlds or times) and of characters (such as supernatural or unnatural beings).'
+        ),
+        Category(
+            name = 'Sci-Fi',
+            description = 'Science fiction, also often known as "sci-fi", is a genre of literature that is imaginative and based around science. It relies heavily on scientific facts, theories, and principles as support for its settings, characters, themes, and plot.'
+        ),        
+        Category(
+            name = 'Children',
+            description = 'Children\'s books are everything from Young Adult down to board books for your teething kiddo, however, a book is considered a children\'s book when it\'s intended for an audience between 0-8 years old.'
+        ),        
+        Category(
+            name = 'Satirical',
+            description = 'Satire in literature is a type of social commentary. Writers use exaggeration, irony, and other devices to poke fun of a particular leader, a social custom or tradition, or any other prevalent social figure or practice that they want to comment on and call into question.'
+        ),
+        Category(
+            name = 'Educational',
+            description = 'Books in the education nonfiction genre can either be books about forms of education and how it\'s achieved or be educational itself, in the form of text books and educational materials.'
+        )
+        ]
+    # Add and commit all seeded categories
+    db.session.add_all(categories)
     db.session.commit()
 
     print('Tables seeded')
