@@ -3,6 +3,7 @@ from init import db, ma
 from flask_sqlalchemy import SQLAlchemy
 from controllers.books_controller import books_bp
 from controllers.users_controller import users_bp
+from controllers.authors_controller import authors_bp
 from controllers.cli_controller import db_commands
 from models.book import Book, BookSchema
 import os
@@ -36,6 +37,7 @@ def create_app():
     # Connecting Blueprints to app
     app.register_blueprint(books_bp)
     app.register_blueprint(users_bp)
+    app.register_blueprint(authors_bp)
     app.register_blueprint(db_commands)
 
     

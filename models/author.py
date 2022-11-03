@@ -15,7 +15,7 @@ class Author(db.Model):
 # Marshmallow schemas 
 class AuthorSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'accolades', 'about')
+        fields = ('id', 'first_name', 'last_name', 'about', 'accolades')
         ordered = True
 
 

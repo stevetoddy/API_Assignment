@@ -2,7 +2,9 @@ from flask import Blueprint, request
 from init import db
 from models.user import User, UserSchema
 
+
 users_bp = Blueprint('users', __name__, url_prefix='/users')
+
 
 # Get all users
 @users_bp.route('/', methods=['GET'])
@@ -10,6 +12,7 @@ def all_users():
     stmt = db.select(User)
     users = db.session.scalars(stmt)
     return UserSchema(many=True).dump(users)
+
 
 # Get one user by ID
 @users_bp.route('/<int:id>', methods=['GET'])
@@ -21,6 +24,7 @@ def one_user(id):
     else:
         return {'error': f'No user with id {id}'}, 404
 
+
 # Get one user by First Name
 @users_bp.route('first_name/<string:name>/', methods=['GET'])
 def user_first_name(name):
@@ -30,6 +34,7 @@ def user_first_name(name):
         return UserSchema().dump(user)
     else:
         return {'error': f'No user with the first name {name}'}, 404
+
 
 # Get one user by Last Name
 @users_bp.route('last_name/<string:name>/', methods=['GET'])
@@ -50,16 +55,16 @@ def create_user():
         last_name = request.json['last_name'],
         is_admin = request.json['is_admin']
     )
-    # Add and commit user to database
+
     db.session.add(user)
     db.session.commit()
 
-    # Respond to client
     return UserSchema().dump(user), 201
+
 
 # Update a User by ID
 @users_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
-def update_one_user(id):
+def update_user(id):
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     if user:
