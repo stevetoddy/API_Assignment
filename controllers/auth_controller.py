@@ -70,15 +70,3 @@ def admin_register():
     
     except IntegrityError:
         return {'error': 'Email address already in use'}, 409
-
-# @auth_bp.route('/users/', methods=['GET'])
-# # @jwt_required()
-# def get_all_users():
-
-#     # if not authorise():
-#     #     return {'error': 'You must be admin'}, 401
-
-
-#     stmt = db.select(User)
-#     users = db.session.scalars(stmt)
-#     return UserSchema(many=True, exclude=['password']).dump(users)

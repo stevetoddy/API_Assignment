@@ -1,21 +1,25 @@
 from flask import Blueprint, request
 from init import db
 from models.author import Author, AuthorSchema
+from flask_jwt_extended import jwt_required
+from controllers.auth_controller import authorise
 
 
 authors_bp = Blueprint('author', __name__, url_prefix='/author')
 
 
-# Get all authors
+# Get all authors (requires authentication)
 @authors_bp.route('/', methods=['GET'])
+@jwt_required()
 def all_authors():
     stmt = db.select(Author)
     authors = db.session.scalars(stmt)
     return AuthorSchema(many=True).dump(authors)
 
 
-# Get one author by ID
+# Get one author by ID (requires authentication)
 @authors_bp.route('/<int:id>', methods=['GET'])
+@jwt_required()
 def one_author(id):
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
@@ -25,8 +29,9 @@ def one_author(id):
         return {'error': f'No author with id {id}'}, 404
 
 
-# Get one author by First Name
+# Get one author by First Name (requires authentication)
 @authors_bp.route('first_name/<string:name>/', methods=['GET'])
+@jwt_required()
 def author_first_name(name):
     stmt = db.select(Author).filter_by(first_name=name)
     author = db.session.scalar(stmt)
@@ -36,8 +41,9 @@ def author_first_name(name):
         return {'error': f'No author with the first name {name}'}, 404
 
 
-# Get one author by Last Name
+# Get one author by Last Name (requires authentication)
 @authors_bp.route('last_name/<string:name>/', methods=['GET'])
+@jwt_required()
 def author_last_name(name):
     stmt = db.select(Author).filter_by(last_name=name)
     author = db.session.scalar(stmt)
@@ -47,9 +53,14 @@ def author_last_name(name):
         return {'error': f'No author with the last name {name}'}, 404
 
 
-# Create author
+# Create author (need to be admin)
 @authors_bp.route('/', methods=['POST'])
+@jwt_required()
 def create_author():
+    # Checking if user has admin rights
+    if not authorise():
+        return {"error":"Must be admin to preform this action"}, 401
+
     author = Author(
         first_name = request.json['first_name'],
         last_name = request.json['last_name'],
@@ -64,9 +75,14 @@ def create_author():
     return AuthorSchema().dump(author), 201
 
 
-# Update an author by ID
+# Update an author by ID (need to be admin)
 @authors_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
-def update_author(id):
+@jwt_required()
+def update_author(id):   
+    # Checking if user has admin rights
+    if not authorise():
+        return {"error":"Must be admin to preform this action"}, 401
+
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     if author:
@@ -81,9 +97,14 @@ def update_author(id):
         return {'error': f'No author with id {id}'}, 404
 
 
-# Delete a author by ID
+# Delete a author by ID (need to be admin)
 @authors_bp.route('/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_author(id):
+    # Checking if user has admin rights
+    if not authorise():
+        return {"error":"Must be admin to preform this action"}, 401
+
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     if author:
