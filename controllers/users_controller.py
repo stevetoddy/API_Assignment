@@ -47,22 +47,6 @@ def user_last_name(name):
         return {'error': f'No user with the last name {name}'}, 404
 
 
-# Create users
-@users_bp.route('/', methods=['POST'])
-def create_user():
-    user = User(
-        email = request.json['email'],
-        first_name = request.json['first_name'],
-        last_name = request.json['last_name'],
-        is_admin = request.json['is_admin']
-    )
-
-    db.session.add(user)
-    db.session.commit()
-
-    return UserSchema().dump(user), 201
-
-
 # Update a User by ID
 @users_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 def update_user(id):

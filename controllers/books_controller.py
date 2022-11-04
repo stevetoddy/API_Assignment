@@ -1,8 +1,11 @@
 from flask import Blueprint, request
 from init import db
 from models.book import Book, BookSchema
+from flask_jwt_extended import jwt_required
+
 
 books_bp = Blueprint('books', __name__, url_prefix='/books')
+
 
 # Get all books
 @books_bp.route('/', methods=['GET'])
@@ -10,6 +13,7 @@ def all_books():
     stmt = db.select(Book)
     books = db.session.scalars(stmt)
     return BookSchema(many=True).dump(books)
+
 
 # Get one book by ID
 @books_bp.route('/<int:id>', methods=['GET'])
@@ -21,6 +25,7 @@ def one_book(id):
     else:
         return {'error': f'No book with id {id}'}, 404
 
+
 # Get one book by Title
 @books_bp.route('/<string:title>', methods=['GET'])
 def title_book(title):
@@ -31,8 +36,10 @@ def title_book(title):
     else:
         return {'error': f'No book with the title {title}'}, 404
 
-# Create books
+
+# Create books (need authorisation)
 @books_bp.route('/', methods=['POST'])
+@jwt_required()
 def create_book():
     book = Book(
         title = request.json['title'],
@@ -40,20 +47,22 @@ def create_book():
         is_kid_friendly  = request.json['is_kid_friendly'],
         in_store = request.json['in_store']
     )
-    # Add and commit book to database
+
     db.session.add(book)
     db.session.commit()
 
-    # Respond to client
     return BookSchema().dump(book), 201
 
-# Update a book by ID
+
+# Update a book by ID (need authorisation)
 @books_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
+@jwt_required()
 def update_one_book(id):
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
     if book:
         book.title = request.json.get('title') or book.title
+        
         # Try block for Boolean values
         try:
             book.is_fiction = request.json['is_fiction'] 
@@ -66,14 +75,18 @@ def update_one_book(id):
             book.is_kid_friendly = book.is_kid_friendly
 
         book.in_store = request.json.get('in_store') or book.in_store
+        
         db.session.commit()
+        
         return BookSchema().dump(book)
+
     else:
         return {'error': f'No book with id {id}'}, 404
 
 
-# Delete a book by ID
+# Delete a book by ID (need authorisation)
 @books_bp.route('/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_one_book(id):
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
