@@ -9,10 +9,9 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 # Create a new user
 @auth_bp.route('/register/', methods=['POST'])
-@jwt_required
+@jwt_required()
 def auth_register():
     try:       
-        # Create a new User
         user = User(
             email = request.json['email'],
             password = bc.generate_password_hash(request.json['password']).decode('utf8'),
@@ -20,11 +19,10 @@ def auth_register():
             last_name = request.json.get('last_name')
         )
         
-        # Add and commit user to DB
         db.session.add(user)
         db.session.commit()
         
-        # Respond to client with the UserSchema and the password excluded 
+        # Respond to client with the UserSchema with the password excluded 
         return UserSchema(exclude=['password']).dump(user), 201
     
     except IntegrityError:
@@ -43,11 +41,35 @@ def auth_login():
     else:
         return {'error': 'Invalid email and password'}, 401
 
-# def authorise():
-#     user_id = get_jwt_identity()
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
+def authorise():
+    user_id = get_jwt_identity()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    return user.is_admin
+
+# Create a new admin user (must have admin rights)
+@auth_bp.route('/register/admin/', methods=['POST'])
+@jwt_required()
+def admin_register():
+    if not authorise():
+        return {"error": "Only an admin user can create an admin user"}
+    try:       
+        user = User(
+            email = request.json['email'],
+            password = bc.generate_password_hash(request.json['password']).decode('utf8'),
+            first_name = request.json.get('first_name'),
+            last_name = request.json.get('last_name'),
+            is_admin = True
+        )
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        # Respond to client with the UserSchema with the password excluded 
+        return UserSchema(exclude=['password']).dump(user), 201
     
+    except IntegrityError:
+        return {'error': 'Email address already in use'}, 409
 
 # @auth_bp.route('/users/', methods=['GET'])
 # # @jwt_required()

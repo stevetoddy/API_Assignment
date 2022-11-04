@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from init import db
 from models.book import Book, BookSchema
 from flask_jwt_extended import jwt_required
+from controllers.auth_controller import authorise
+# from boolean_try_block import boolean_try
 
 
 books_bp = Blueprint('books', __name__, url_prefix='/books')
@@ -54,15 +56,22 @@ def create_book():
     return BookSchema().dump(book), 201
 
 
-# Update a book by ID (need authorisation)
+# Update a book by ID (need to be admin)
 @books_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_one_book(id):
+    
+    # Checking if user has admin rights
+    if not authorise():
+        return {"error":"Must be admin to preform this action"}, 401
+
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
     if book:
         book.title = request.json.get('title') or book.title
         
+        # boolean_try(book.is_fiction, 'is_fiction')
+
         # Try block for Boolean values
         try:
             book.is_fiction = request.json['is_fiction'] 
@@ -84,10 +93,15 @@ def update_one_book(id):
         return {'error': f'No book with id {id}'}, 404
 
 
-# Delete a book by ID (need authorisation)
+# Delete a book by ID (need to be admin)
 @books_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_one_book(id):
+
+    # Checking if user has admin rights
+    if not authorise():
+        return {"error":"Must be admin to preform this action"}, 401
+
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
     if book:
