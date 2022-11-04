@@ -64,8 +64,7 @@ def create_book():
 @jwt_required()
 def update_one_book(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
@@ -101,8 +100,7 @@ def update_one_book(id):
 def delete_one_book(id):
 
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
@@ -112,3 +110,4 @@ def delete_one_book(id):
         return {'message': f"Book '{book.title}' deleted successfully"}
     else:
         return {'error': f'No book with id {id}'}, 404
+        

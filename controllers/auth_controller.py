@@ -1,11 +1,22 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from init import db, bc, jwt
 from models.user import User, UserSchema
 from sqlalchemy.exc import IntegrityError
 from datetime import timedelta
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
+
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+# Admin Authorisation function
+def authorise():
+    user_id = get_jwt_identity()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if not user.is_admin:
+        abort(401)
+
 
 # Create a new user
 @auth_bp.route('/register/', methods=['POST'])
@@ -28,6 +39,7 @@ def auth_register():
     except IntegrityError:
         return {'error': 'Email address already in use'}, 409
 
+
 # Registered User Login
 @auth_bp.route('/login/', methods=['POST'])
 def auth_login():
@@ -41,11 +53,6 @@ def auth_login():
     else:
         return {'error': 'Invalid email and password'}, 401
 
-def authorise():
-    user_id = get_jwt_identity()
-    stmt = db.select(User).filter_by(id=user_id)
-    user = db.session.scalar(stmt)
-    return user.is_admin
 
 # Create a new admin user (must have admin rights)
 @auth_bp.route('/register/admin/', methods=['POST'])

@@ -46,8 +46,7 @@ def category_name(name):
 @jwt_required()
 def create_category():
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     category = Category(
         name = request.json['name'],
@@ -65,8 +64,7 @@ def create_category():
 @jwt_required()
 def update_category(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
@@ -85,8 +83,7 @@ def update_category(id):
 @jwt_required()
 def delete_category(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
@@ -96,3 +93,4 @@ def delete_category(id):
         return {'message': f"Category '{category.name}' deleted successfully"}
     else:
         return {'error': f'No category with id {id}'}, 404
+        

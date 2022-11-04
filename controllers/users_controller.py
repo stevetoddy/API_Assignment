@@ -58,8 +58,7 @@ def user_last_name(name):
 @jwt_required()
 def update_user(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
@@ -84,8 +83,7 @@ def update_user(id):
 @jwt_required()
 def delete_user(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)

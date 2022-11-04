@@ -58,8 +58,7 @@ def author_last_name(name):
 @jwt_required()
 def create_author():
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     author = Author(
         first_name = request.json['first_name'],
@@ -80,8 +79,7 @@ def create_author():
 @jwt_required()
 def update_author(id):   
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
@@ -102,8 +100,7 @@ def update_author(id):
 @jwt_required()
 def delete_author(id):
     # Checking if user has admin rights
-    if not authorise():
-        return {"error":"Must be admin to preform this action"}, 401
+    authorise()
 
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
@@ -113,3 +110,4 @@ def delete_author(id):
         return {'message': f"Author '{author.first_name} {author.last_name}' deleted successfully"}
     else:
         return {'error': f'No author with id {id}'}, 404
+        
