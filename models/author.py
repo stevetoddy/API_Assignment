@@ -10,7 +10,8 @@ class Author(db.Model):
     last_name = db.Column(db.String(50))
     accolades = db.Column(db.Text)
     about = db.Column(db.Text)
-    
+
+    books = db.relationship('Book', back_populates='author')
 
 # Marshmallow schemas 
 class AuthorSchema(ma.Schema):

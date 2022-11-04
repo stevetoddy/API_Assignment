@@ -7,8 +7,8 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    description = db.Column(db.Text)
-    
+    description = db.Column(db.Text) 
+    books = db.relationship('Book', back_populates='categories')
 
 # Marshmallow schemas 
 class CategorySchema(ma.Schema):

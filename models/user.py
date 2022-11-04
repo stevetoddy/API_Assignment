@@ -12,6 +12,9 @@ class User(db.Model):
     last_name = db.Column(db.String(50))
     is_admin = db.Column(db.Boolean, default=False)
     
+    # Foreign Key Relationship
+    comments = db.relationship('Comment', back_populates='users')
+    
 
 # Marshmallow schemas 
 class UserSchema(ma.Schema):

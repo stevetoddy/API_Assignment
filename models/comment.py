@@ -7,6 +7,12 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
+    # Foreign Keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    users = db.relationship('User', back_populates='comments')
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    books = db.relationship('Book', back_populates='comments')
+
     
 
 # Marshmallow schemas 
