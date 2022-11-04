@@ -51,6 +51,7 @@ def user_last_name(name):
 @users_bp.route('/', methods=['POST'])
 def create_user():
     user = User(
+        email = request.json['email'],
         first_name = request.json['first_name'],
         last_name = request.json['last_name'],
         is_admin = request.json['is_admin']
@@ -68,6 +69,7 @@ def update_user(id):
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     if user:
+        user.email = request.json.get('email') or user.email
         user.first_name = request.json.get('first_name') or user.first_name
         user.last_name  = request.json.get('last_name') or user.last_name
         # Try block for Boolean values

@@ -72,26 +72,31 @@ def seed_db():
 
     users = [
         User(
+            email = 'steve@email.com',
             first_name = 'Steve',
             last_name = 'Todorovic',
             is_admin = True
         ),        
         User(
+            email = 'denna@email.com',
             first_name = 'Denna',
             last_name = 'Thomas',
             is_admin = False
         ),
         User(
+            email = 'bast@email.com',
             first_name = 'Sebastian',
             last_name = 'Townsend',
             is_admin = False
         ),
         User(
+            email = 'ben@email.com',
             first_name = 'Ben',
             last_name = 'Abenathy',
             is_admin = False
         ),
         User(
+            email = 'sim@email.com',
             first_name = 'Simon',
             last_name = 'Williams',
             is_admin = False
