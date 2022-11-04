@@ -9,16 +9,18 @@ from controllers.auth_controller import authorise
 books_bp = Blueprint('books', __name__, url_prefix='/books')
 
 
-# Get all books
+# Get all books (requires authentication)
 @books_bp.route('/', methods=['GET'])
+@jwt_required()
 def all_books():
     stmt = db.select(Book)
     books = db.session.scalars(stmt)
     return BookSchema(many=True).dump(books)
 
 
-# Get one book by ID
+# Get one book by ID (requires authentication)
 @books_bp.route('/<int:id>', methods=['GET'])
+@jwt_required()
 def one_book(id):
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
@@ -28,8 +30,9 @@ def one_book(id):
         return {'error': f'No book with id {id}'}, 404
 
 
-# Get one book by Title
+# Get one book by Title  (requires authentication)
 @books_bp.route('/<string:title>', methods=['GET'])
+@jwt_required()
 def title_book(title):
     stmt = db.select(Book).filter_by(title=title)
     book = db.session.scalar(stmt)
@@ -39,7 +42,7 @@ def title_book(title):
         return {'error': f'No book with the title {title}'}, 404
 
 
-# Create books (need authorisation)
+# Create books (requires authentication)
 @books_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_book():
@@ -60,7 +63,6 @@ def create_book():
 @books_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_one_book(id):
-    
     # Checking if user has admin rights
     if not authorise():
         return {"error":"Must be admin to preform this action"}, 401
