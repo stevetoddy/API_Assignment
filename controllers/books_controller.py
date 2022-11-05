@@ -24,11 +24,34 @@ def all_books():
 def one_book(id):
     stmt = db.select(Book).filter_by(id=id)
     book = db.session.scalar(stmt)
+    print(book)
+    print(stmt)
     if book:
         return BookSchema().dump(book)
     else:
         return {'error': f'No book with id {id}'}, 404
 
+# Get all books by Author (requires authentication)
+@books_bp.route('/author/<int:author_id>', methods=['GET'])
+@jwt_required()
+def author_books(author_id):
+    stmt = db.select(Book).filter_by(author_id=author_id)
+    book = db.session.scalars(stmt)
+    if book:
+        return BookSchema(many=True, exclude=['comments']).dump(book)
+    else:
+        return {'error': f'No author with id {author_id}'}, 404
+        
+# Get all books by Category (requires authentication)
+@books_bp.route('/category/<int:category_id>', methods=['GET'])
+@jwt_required()
+def category_books(category_id):
+    stmt = db.select(Book).filter_by(category_id=category_id)
+    book = db.session.scalars(stmt)
+    if book:
+        return BookSchema(many=True, exclude=['comments']).dump(book)
+    else:
+        return {'error': f'No category with id {category_id}'}, 404
 
 # Get one book by Title  (requires authentication)
 @books_bp.route('/<string:title>', methods=['GET'])
