@@ -1,4 +1,5 @@
 from init import db, ma 
+from marshmallow import fields
 
 
 # SQLAlchemy model for Book resources, tabled called 'books'
@@ -12,17 +13,22 @@ class Book(db.Model):
     in_store = db.Column(db.Integer)
     #Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
-    author = db.relationship('Author', back_populates='books')
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)    
-    categories = db.relationship('Category', back_populates='books')
     # Foreign Key Relationship
-    comments = db.relationship('Comment', back_populates='books', cascade='all, delete')
+    author = db.relationship('Author', back_populates='books')    
+    category = db.relationship('Category', back_populates='books')
+    comments = db.relationship('Comment', back_populates='book', cascade='all, delete')
     
 
 # Marshmallow schemas 
 class BookSchema(ma.Schema):
+    # Nesting attributes from other tables into return
+    author = fields.Nested('AuthorSchema', only=['first_name', 'last_name'])
+    category = fields.Nested('CategorySchema', only=['name'])
+    comments = fields.List(fields.Nested('CommentSchema'))
+
     class Meta:
-        fields = ('id', 'title', 'author_id', 'category_id', 'is_fiction', 'is_kid_friendly', 'in_store')
+        fields = ('id', 'title', 'author', 'category', 'comments', 'is_fiction', 'is_kid_friendly', 'in_store')
         ordered = True
 
 

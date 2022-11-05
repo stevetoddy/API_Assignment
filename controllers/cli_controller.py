@@ -97,56 +97,56 @@ def seed_db():
             is_fiction = True,
             is_kid_friendly = False,
             in_store = 0,
-            author_id = authors[0].id,
-            category_id = categories[0].id
+            author = authors[0],
+            category = categories[0]
         ),
         Book(
             title = 'The Wise Man\'s Fear',
             is_fiction = True,
             is_kid_friendly = False,
             in_store = 2,
-            author_id = authors[0].id,
-            category_id = categories[0].id
+            author = authors[0],
+            category = categories[0]
         ),
         Book(
             title = 'The Way of Kings',
             is_fiction = True,
             is_kid_friendly = False,
             in_store = 4,
-            author_id = authors[1].id,
-            category_id = categories[0].id
+            author = authors[1],
+            category = categories[0]
         ),
         Book(
             title = 'Catch 22',
             is_fiction = True,
             is_kid_friendly = False,
             in_store = 2,
-            author_id = authors[3].id,
-            category_id = categories[3].id
+            author = authors[3],
+            category = categories[3]
         ),
         Book(
             title = 'Excession',
             is_fiction = True,
             is_kid_friendly = False,
             in_store = 3,
-            author_id = authors[4].id,
-            category_id = categories[1].id
+            author = authors[4],
+            category = categories[1]
         ),
         Book(
             title = 'Cat in the Hat',
             is_fiction = True,
             is_kid_friendly = True,
             in_store = 5,
-            author_id = authors[2].id,
-            category_id = categories[2].id
+            author = authors[2],
+            category = categories[2]
         ),
         Book(
             title = 'Automate the Boring Stuff with Python',
             is_fiction = False,
             is_kid_friendly = True,
             in_store = 1,
-            author_id = authors[5].id,
-            category_id = categories[4].id
+            author = authors[5],
+            category = categories[4]
         )
         ]
     # Add and commit all seeded books
@@ -197,29 +197,29 @@ def seed_db():
 
     comments = [
         Comment(
-            body = 'Name of the Wind is a fantastic take on the young hero troupe',
-            user_id = users[1].id,
-            book_id = books[0].id
+            body = 'Name of the Wind is a fantastic take on the young hero trope',
+            user = users[1],
+            book = books[0]
         ),
         Comment(
-            body = 'Comment 2',
-            user_id = users[0].id,
-            book_id = books[1].id
+            body = 'Book 2 of 3 in The Kingkiller Chronicles',
+            user = users[0],
+            book = books[1]
         ),        
         Comment(
-            body = 'Comment 3',
-            user_id = users[2].id,
-            book_id = books[2].id
+            body = 'The first book in Sanderson\'s epic Stormlight Archive series',
+            user = users[2],
+            book = books[2]
         ),        
         Comment(
-            body = 'Comment 4',
-            user_id = users[2].id,
-            book_id = books[3].id
+            body = 'Hilarious and harrowing at the same time!',
+            user = users[2],
+            book = books[3]
         ),
         Comment(
-            body = 'Comment 5',
-            user_id = users[3].id,
-            book_id = books[4].id
+            body = 'Sci-Fi on a massive scale, will leave you think',
+            user = users[3],
+            book = books[4]
         )
         ]
     # Add and commit all seeded categories

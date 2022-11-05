@@ -13,7 +13,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     
     # Foreign Key Relationship
-    comments = db.relationship('Comment', back_populates='users')
+    comments = db.relationship('Comment', back_populates='user')
     
 
 # Marshmallow schemas 
