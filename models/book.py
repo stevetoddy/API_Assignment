@@ -25,6 +25,7 @@ class BookSchema(ma.Schema):
     # Nesting attributes from other tables into return
     author = fields.Nested('AuthorSchema', only=['first_name', 'last_name'])
     category = fields.Nested('CategorySchema', only=['name'])
+    # Nesting multiple attributes from another table into return
     comments = fields.List(fields.Nested('CommentSchema'))
 
     class Meta:
