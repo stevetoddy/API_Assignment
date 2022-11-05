@@ -92,16 +92,21 @@ def create_book():
 @books_bp.route('<int:id>/comment/', methods=['POST'])
 @jwt_required()
 def create_comment(id):
-    comment = Comment(
-        body = request.json['body'],
-        user_id = get_jwt_identity(),
-        book_id = id
-    )
+    stmt = db.select(Book).filter_by(id=id)
+    book = db.session.scalar(stmt)
+    if book:
+        comment = Comment(
+            body = request.json['body'],
+            user_id = get_jwt_identity(),
+            book_id = id
+        )
 
-    db.session.add(comment)
-    db.session.commit()
+        db.session.add(comment)
+        db.session.commit()
 
-    return CommentSchema().dump(comment), 201
+        return CommentSchema().dump(comment), 201
+    else:
+        return {"error": f"No book found with id {id}"}
 
 
 # Update a book by ID (need to be admin)
