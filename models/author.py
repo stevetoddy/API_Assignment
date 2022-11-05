@@ -16,10 +16,10 @@ class Author(db.Model):
 
 # Marshmallow schemas 
 class AuthorSchema(ma.Schema):
-    books = fields.Nested('BookSchema')
+    books = fields.List(fields.Nested('BookSchema', only=['title', 'in_store', 'id']))
 
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'about', 'accolades')
+        fields = ('id', 'first_name', 'last_name', 'about', 'accolades', 'books')
         ordered = True
 
 

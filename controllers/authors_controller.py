@@ -28,16 +28,6 @@ def one_author(id):
     else:
         return {'error': f'No author with id {id}'}, 404
 
-# # Get all books by author
-# @authors_bp.route('/titles/<int:id>', methods=['GET'])
-# # @jwt_required()
-# def all_titles(id):
-#     stmt = db.select(Author).filter_by(id=id)
-#     author = db.session.scalar(stmt)
-#     if author:
-#         return AuthorSchema().dump(author)
-#     else:
-#         return {'error': f'No author with id {id}'}, 404
 
 # Get one author by First Name (requires authentication)
 @authors_bp.route('first_name/<string:name>/', methods=['GET'])
