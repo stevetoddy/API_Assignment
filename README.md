@@ -5,6 +5,8 @@
 - [R2 - Why is it a problem that needs solving](#r2-–-why-is-it-a-problem-that-needs-solving)  
 - [R3 - Why have you chosen this database system. What are the drawbacks compared to others?](#r3---why-have-you-chosen-this-database-system-what-are-the-drawbacks-compared-to-others)  
 - [R4 - Identify and discuss the key functionalities and benefits of an ORM](#r4---identify-and-discuss-the-key-functionalities-and-benefits-of-an-orm)  
+- [R5 - Document all endpoints for the API](#r5---document-all-endpoints-for-the-api)  
+  - [Comments Endpoints](#comments) 
 - [R6 - Make an ERD for the app](#r6---make-an-erd-for-the-app)  
 - [R8 - Discuss the database relations to be implemented in your application](#r8---discuss-the-database-relations-to-be-implemented-in-your-application)  
 - [R10 - Describe the way tasks are allocated and tracked in your project](#r10---describe-the-way-tasks-are-allocated-and-tracked-in-your-project)
@@ -16,6 +18,8 @@ A book store requires a inventory system that will allow employees to easily fin
 ## R2 – Why is it a problem that needs solving?
 
 The inventory system is needed to help employees save time when serving customers in many different ways. Employees will be able to quickly find specific books when customers inquire if it is in stock, and if it is not in stock, they will be able to quickly recommend similar books to the customer, based on other titles by the same author, or similar books in the same style. Employees will also be able to give customers a quick overview of a book from the internal review system. This will not only reduce the work load on the employees, it will also add to the customer experience, without needing the employee to read and memorise all of the titles within the store. Managers tasks will be made easier as they will be able to check inventory levels along with being able to disseminating talking points throughout the staff that they would like to emphasise on certain titles to increase sales using the review system.  
+
+An API may seem like overkill for a book store's internal inventory system, but having access from anywhere is essential with todays hybrid working environments. If a manager is checking inventory while ordering new titles, they can now do it from their home office. This is only one of the many examples that could crop up that having a web based inventory can solve.  
 
 ## R3 -  Why have you chosen this database system. What are the drawbacks compared to others?
 
@@ -34,6 +38,264 @@ ORMs can make accessing data much easier. They map out how certain objects will 
 Another very important and welcome feature of an ORM is that it increases your databases security, reducing the possibility of SQL injection threats. This is because of the layer of abstraction an ORM gives a database, forcing outside queries through the ORM before it can make it to the database itself. Of course, this is not perfect and ORM injection can happen. 
 
 Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all. 
+
+## R5 - Document all endpoints for the API
+
+## **AUTHORS**
+## **AUTHORISATION**
+## **BOOKS**
+## **CATEGORIES**
+## **USERS**
+
+---
+
+## **COMMENTS**
+
+---
+
+## */comments*
+
+### Description
+- Return all comments made by all users.
+- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments
+
+### ARGUMENTS
+ - None
+
+### REQUEST BODY EXAMPLE 
+- None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+[
+    {
+        "id": 1,
+        "body": "Name of the Wind is a fantastic take on the young hero trope",
+        "book": {
+            "title": "The Name of the Wind",
+            "author": {
+                "first_name": "Patrick",
+                "last_name": "Rothfuss"
+            }
+        },
+        "user": {
+            "id": 2,
+            "first_name": "Steve",
+            "last_name": "Thomas"
+        }
+    },
+    {
+        "id": 2,
+        "body": "Book 2 of 3 in The Kingkiller Chronicles",
+        "book": {
+            "title": "The Wise Man's Fear",
+            "author": {
+                "first_name": "Patrick",
+                "last_name": "Rothfuss"
+            }
+        },
+        "user": {
+            "id": 1,
+            "first_name": "Steve",
+            "last_name": "Todorovic"
+        }
+    },
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Return a specific comment by ID.
+- This end point will return the typical comment schema for a specific comment, identified by the comment ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments/1
+
+### ARGUMENTS
+ - id (int)
+
+### REQUEST BODY EXAMPLE 
+- None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 1,
+    "body": "Name of the Wind is a fantastic take on the young hero trope",
+    "book": {
+        "title": "The Name of the Wind",
+        "author": {
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        }
+    },
+    "user": {
+        "id": 2,
+        "first_name": "Steve",
+        "last_name": "Thomas"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */comments/user/\<int:user_id\>*
+
+### Description
+- Return all comments made by a specific user.
+- This end point will return the typical comment schema from a specific user, identified by their User ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments/user/1
+
+### ARGUMENTS
+ - user_id (int)
+
+### REQUEST BODY EXAMPLE 
+- None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 1,
+    "body": "Name of the Wind is a fantastic take on the young hero trope",
+    "book": {
+        "title": "The Name of the Wind",
+        "author": {
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        }
+    },
+    "user": {
+        "id": 2,
+        "first_name": "Steve",
+        "last_name": "Thomas"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+  
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Update the body text of a specific comment, by ID.
+- This end point will return the typical comment schema with an updated comment body.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - PUT / PATCH
+
+### EXAMPLE
+ - /comments/3
+
+### ARGUMENTS
+ - id (int)
+
+### REQUEST BODY EXAMPLE 
+```py
+{
+    "body": "Updated comment body"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 3,
+    "body": "Updated comment body",
+    "book": {
+        "title": "The Way of Kings",
+        "author": {
+            "first_name": "Brandon",
+            "last_name": "Sanderson"
+        }
+    },
+    "user": {
+        "id": 3,
+        "first_name": "Sebastian",
+        "last_name": "Townsend"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+  
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Delete a specific comment, by ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin through JWT Bearer Token
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /comments/1
+
+### ARGUMENTS
+ - id (int)
+
+### REQUEST BODY EXAMPLE 
+ - None
+
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "message": "Comment No.1 deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+--- 
+### *Create comments endpoint found [here]() in Books endpoints*
+---
+
 
 ## R6 - Make an ERD for the app
 This is my ERD for my Book Store application.  
