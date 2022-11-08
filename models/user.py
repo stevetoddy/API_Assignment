@@ -21,7 +21,6 @@ class User(db.Model):
 # Marshmallow schemas 
 class UserSchema(ma.Schema):
     # Validation 
-    
     # First name address must have at least 1 character and contain only letters
     first_name = fields.String(required=True, validate=
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 

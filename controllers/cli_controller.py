@@ -15,11 +15,13 @@ def create_db():
     db.create_all()
     print("Tables created")
 
+# Drop the database
 @db_commands.cli.command('drop')
 def drop_db():
     db.drop_all()
     print("Tables dropped")
 
+# Seed database with dummy info
 @db_commands.cli.command('seed')
 def seed_db():
     authors = [

@@ -44,7 +44,7 @@ def auth_register():
         db.session.add(user)
         db.session.commit()
         
-        # Respond to client with the UserSchema with the password excluded 
+        # Respond to client with the new user with the password excluded 
         return UserSchema(exclude=['password']).dump(user), 201
     
     # Response to client is email is already in use
@@ -64,7 +64,7 @@ def auth_login():
     if user and bc.check_password_hash(user.password, request.json['password']):
         token = create_access_token(identity= str(user.id), expires_delta=timedelta(days=1))
         
-        # Response to client
+        # Response to client with user and token info
         return {'email': user.email, 'token': token, 'is_admin': user.is_admin}
     
     # If not found
@@ -96,7 +96,7 @@ def admin_register():
         db.session.add(user)
         db.session.commit()
         
-        # Respond to client with the UserSchema with the password excluded 
+        # Respond to client with the new admin with the password excluded 
         return UserSchema(exclude=['password']).dump(user), 201
     
     # Response to client is email is already in use

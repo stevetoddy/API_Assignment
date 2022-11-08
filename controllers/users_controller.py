@@ -13,11 +13,11 @@ users_bp = Blueprint('users', __name__, url_prefix='/users')
 @jwt_required()
 def all_users():
    
-    # Query
+    # Query to get all users
     stmt = db.select(User)
     users = db.session.scalars(stmt)
     
-    # Respond to client
+    # Respond to client with all users, excluding the password
     return UserSchema(many=True, exclude=['password']).dump(users)
 
 
@@ -26,14 +26,14 @@ def all_users():
 @jwt_required()
 def one_user(id):
 
-    # Query
+    # Query to find user by ID
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
    
     # If found
     if user:
         
-        # Respond to client
+        # Respond to client with user excluding password
         return UserSchema(exclude=['password']).dump(user)
     
     # If not found
@@ -46,14 +46,14 @@ def one_user(id):
 @jwt_required()
 def user_first_name(name):
 
-    # Query
+    # Query to find user by first name
     stmt = db.select(User).filter_by(first_name=name)
     user = db.session.scalar(stmt)
     
     # If found
     if user:
 
-        # Respond to client
+        # Respond to client with user excluding the password
         return UserSchema(exclude=['password']).dump(user)
    
     # If not found
@@ -66,14 +66,14 @@ def user_first_name(name):
 @jwt_required()
 def user_last_name(name):
 
-    # Query
+    # Query to find user by last name
     stmt = db.select(User).filter_by(last_name=name)
     user = db.session.scalar(stmt)
     
     # If found
     if user:
 
-        # Respond to client
+        # Respond to client with user excluding password
         return UserSchema(exclude=['password']).dump(user)
     
     # If not found
@@ -91,11 +91,11 @@ def update_user(id):
     # Loading requests through schema for validation 
     data = UserSchema().load(request.json)
     
-    # Query
+    # Query to find user by ID
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     
-    # If found
+    # If found, update with values sent
     if user:
         user.email = data.get('email') or user.email
         user.password  = data.get('password') or user.password
@@ -110,7 +110,7 @@ def update_user(id):
         # Commit User changes to database
         db.session.commit()
         
-        # Respond to client
+        # Respond to client with updated user excluding the password
         return UserSchema(exclude=['password']).dump(user)
     
     # If not found
@@ -125,7 +125,7 @@ def delete_user(id):
     # Checking if user has admin rights
     authorise()
     
-    # Query
+    # Query to find user by ID
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     

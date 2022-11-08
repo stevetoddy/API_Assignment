@@ -25,7 +25,6 @@ class CommentSchema(ma.Schema):
     book = fields.Nested('BookSchema', only=['title', 'author'])
     
     # Validation 
-
     # Comment body name must be longer than 1 character
     body = fields.String(required=True, validate=
         Length(min=2, error="Comment must be longer than 1 character"))

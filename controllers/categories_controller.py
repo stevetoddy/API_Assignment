@@ -13,11 +13,11 @@ categories_bp = Blueprint('categories', __name__, url_prefix='/categories')
 @jwt_required()
 def all_categories():
     
-    # Query
+    # Query to get all categories
     stmt = db.select(Category)
     categories = db.session.scalars(stmt)
     
-    # Respond to client
+    # Respond to client with all categories
     return CategorySchema(many=True).dump(categories)
 
 
@@ -26,14 +26,14 @@ def all_categories():
 @jwt_required()
 def one_category(id):
 
-    # Query
+    # Query to find category by ID
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
     
     # If found
     if category:
 
-        # Respond to client
+        # Respond to client with category
         return CategorySchema().dump(category)
     
     # If not found
@@ -46,14 +46,14 @@ def one_category(id):
 @jwt_required()
 def category_name(name):
     
-    # Query
+    # Query to find category by name
     stmt = db.select(Category).filter_by(name=name)
     category = db.session.scalar(stmt)
     
     # If found
     if category:
         
-        # Respond to client
+        # Respond to client with category
         return CategorySchema().dump(category)
     
     # If not found
@@ -80,7 +80,7 @@ def create_category():
     db.session.add(category)
     db.session.commit()
 
-    # Respond to client
+    # Respond to client with new category
     return CategorySchema().dump(category), 201
 
 
@@ -94,11 +94,11 @@ def update_category(id):
     # Loading requests through schema for validation 
     data = CategorySchema().load(request.json)
     
-    # Query
+    # Query to find category by ID
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
     
-    # If found
+    # If found, update category
     if category:
         category.name = data.get('name') or category.name
         category.description  = data.get('description') or category.description
@@ -106,7 +106,7 @@ def update_category(id):
         # Commit author updates to database
         db.session.commit()
     
-        # Respond to client
+        # Respond to client with updated category
         return CategorySchema().dump(category)
     
     # If not found
@@ -121,7 +121,7 @@ def delete_category(id):
     # Checking if user has admin rights
     authorise()
 
-    # Query
+    # Query to find category by ID
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
    

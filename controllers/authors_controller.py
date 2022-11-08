@@ -13,11 +13,11 @@ authors_bp = Blueprint('author', __name__, url_prefix='/author')
 @jwt_required()
 def all_authors():
 
-    # Query
+    # Query to get all authors
     stmt = db.select(Author)
     authors = db.session.scalars(stmt)
     
-    # Respond to client
+    # Respond to client with all authors
     return AuthorSchema(many=True).dump(authors)
 
 
@@ -26,14 +26,14 @@ def all_authors():
 @jwt_required()
 def one_author(id):
     
-    # Query
+    # Query to find author by ID
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     
     # If found
     if author:
         
-        # Respond to client
+        # Respond to client with author
         return AuthorSchema().dump(author)
     
     # If not found
@@ -46,14 +46,14 @@ def one_author(id):
 @jwt_required()
 def author_first_name(name):   
      
-    # Query
+    # Query to find author by first name
     stmt = db.select(Author).filter_by(first_name=name)
     author = db.session.scalar(stmt)
     
     # If found
     if author:
 
-        # Respond to client
+        # Respond to client with author
         return AuthorSchema().dump(author)
     
     # If not found
@@ -66,14 +66,14 @@ def author_first_name(name):
 @jwt_required()
 def author_last_name(name):
          
-    # Query
+    # Query to find author by last name
     stmt = db.select(Author).filter_by(last_name=name)
     author = db.session.scalar(stmt)
     
     # If found
     if author:
         
-        # Respond to client
+        # Respond to client with Author
         return AuthorSchema().dump(author)
     
     # If not found
@@ -87,6 +87,7 @@ def author_last_name(name):
 def create_author():
     # Checking if user has admin rights
     authorise()
+
     # Loading requests through schema for validation 
     data = AuthorSchema().load(request.json)
     
@@ -96,11 +97,12 @@ def create_author():
         accolades = data['accolades'],
         about = data['about']
     )
+
     # Add and commit author to database
     db.session.add(author)
     db.session.commit()
 
-    # Respond to client
+    # Respond to client with new author
     return AuthorSchema().dump(author), 201
 
 
@@ -111,11 +113,11 @@ def update_author(id):
     # Checking if user has admin rights
     authorise()
          
-    # Query
+    # Query to find author by ID
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     
-    # If found
+    # If found, update author with details sent
     if author:
         author.first_name = request.json.get('first_name') or author.first_name
         author.last_name  = request.json.get('last_name') or author.last_name
@@ -125,7 +127,7 @@ def update_author(id):
         # Commit changes to database
         db.session.commit()
         
-        # Respond to client
+        # Respond to client with updated author
         return AuthorSchema().dump(author)
     
     # If not found
@@ -140,7 +142,7 @@ def delete_author(id):
     # Checking if user has admin rights
     authorise()
          
-    # Query
+    # Query to find author by ID
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     

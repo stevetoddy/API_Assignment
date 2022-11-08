@@ -21,7 +21,6 @@ class AuthorSchema(ma.Schema):
     books = fields.List(fields.Nested('BookSchema', only=['title', 'in_store', 'id']))
     
     # Validation 
-    
     # First name must have at least 1 character and contain only letters
     first_name = fields.String(required=True, validate=
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 

@@ -1,6 +1,6 @@
 from init import db, ma 
 from marshmallow import fields
-
+from marshmallow.validate import Length
 
 # SQLAlchemy model for Book resources, tabled called 'books'
 class Book(db.Model):
@@ -24,10 +24,15 @@ class Book(db.Model):
 class BookSchema(ma.Schema):
     # Nesting attributes from other tables into return
     author = fields.Nested('AuthorSchema', only=['first_name', 'last_name'])
-    
     category = fields.Nested('CategorySchema', only=['name'])
+    
     # Nesting multiple attributes from another table into return
     comments = fields.List(fields.Nested('CommentSchema'))
+
+    # Validation 
+    # Titles must have at least 1 character
+    title = fields.String(required=True, validate=
+        Length(min=1, error="Title must be at least 1 character long"))
 
     class Meta:
         fields = ('id', 'title', 'author', 'category', 'comments', 'is_fiction', 'is_kid_friendly', 'in_store')
