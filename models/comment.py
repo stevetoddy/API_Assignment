@@ -1,5 +1,6 @@
 from init import db, ma 
 from marshmallow import fields
+from marshmallow.validate import Length
 
 
 # SQLAlchemy model for Comment resources, tabled called 'comments'
@@ -22,6 +23,13 @@ class CommentSchema(ma.Schema):
     # Nesting attributes from other tables into return
     user = fields.Nested('UserSchema', only=['id', 'first_name', 'last_name'])
     book = fields.Nested('BookSchema', only=['title', 'author'])
+    
+    # Validation 
+
+    # Comment body name must be longer than 1 character
+    body = fields.String(required=True, validate=
+        Length(min=2, error="Comment must be longer than 1 character"))
+
 
     class Meta:
         fields = ('id', 'body', 'book', 'user' )

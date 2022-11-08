@@ -1,6 +1,7 @@
 from init import db, ma 
 from marshmallow import fields  
-from marshmallow.validate import Length
+from marshmallow.validate import Regexp
+
 
 # SQLAlchemy model for Author resources, tabled called 'authors'
 class Author(db.Model):
@@ -18,9 +19,17 @@ class Author(db.Model):
 class AuthorSchema(ma.Schema):
     # Nesting attributes from other tables
     books = fields.List(fields.Nested('BookSchema', only=['title', 'in_store', 'id']))
+    
     # Validation 
-    first_name = fields.String(required=True, validate=Length(min=1, error="Author's First Name must be at least 1 character"))
-    last_name = fields.String(required=True, validate=Length(min=1, error="Author's Last Name must be at least 1 character"))
+    
+    # First name must have at least 1 character and contain only letters
+    first_name = fields.String(required=True, validate=
+        Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 
+
+    # Last name must have at least 1 character and contain only letters
+    last_name = fields.String(validate= 
+        Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="Last names must be at least 1 character long and contain only letters"))
+
 
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'about', 'accolades', 'books')

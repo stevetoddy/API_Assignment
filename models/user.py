@@ -1,6 +1,6 @@
 from init import db, ma 
-from marshmallow import fields, validates
-from marshmallow.validate import Length, Regexp, And
+from marshmallow import fields
+from marshmallow.validate import Regexp
 
 
 # SQLAlchemy model for User resources, tabled called 'users'

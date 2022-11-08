@@ -67,6 +67,7 @@ def category_name(name):
 def create_category():
     # Checking if user has admin rights
     authorise()
+   
     # Loading requests through schema for validation 
     data = CategorySchema().load(request.json)
     

@@ -15,7 +15,10 @@ class Category(db.Model):
 # Marshmallow schemas 
 class CategorySchema(ma.Schema):
     # Validation 
-    name = fields.String(required=True, validate=Length(min=2, error="Category name must be longer than 1 character"))
+
+    # Category name must be longer than 1 character
+    name = fields.String(required=True, validate=
+        Length(min=2, error="Category name must be longer than 1 character"))
 
 
     class Meta:
