@@ -25,7 +25,7 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True, validate=
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 
 
-    # First name address must contain only letters
+    # Last name address must contain only letters
     last_name = fields.String(validate= 
         Regexp('^[a-zA-Z ]+$', error="Last names must contain only letters"))
 

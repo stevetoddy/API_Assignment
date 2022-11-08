@@ -19,7 +19,10 @@ class CategorySchema(ma.Schema):
     # Category name must be longer than 1 character
     name = fields.String(required=True, validate=
         Length(min=2, error="Category name must be longer than 1 character"))
-
+    
+    # Category description must be longer than 1 character
+    name = fields.String(required=True, validate=
+        Length(min=2, error="Category description must be longer than 1 character"))
 
     class Meta:
         fields = ('id', 'name', 'description')

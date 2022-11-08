@@ -1,6 +1,6 @@
 from init import db, ma 
 from marshmallow import fields  
-from marshmallow.validate import Regexp
+from marshmallow.validate import Regexp, Length
 
 
 # SQLAlchemy model for Author resources, tabled called 'authors'
@@ -29,7 +29,14 @@ class AuthorSchema(ma.Schema):
     last_name = fields.String(validate= 
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="Last names must be at least 1 character long and contain only letters"))
 
-
+    # Category description must be longer than 1 character
+    about = fields.String(required=True, validate=
+        Length(min=2, error="Author about must be longer than 1 character"))
+    
+    # Category description must be longer than 1 character
+    accolades = fields.String(required=True, validate=
+        Length(min=2, error="Author accolades must be longer than 1 character"))
+    
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'about', 'accolades', 'books')
         ordered = True

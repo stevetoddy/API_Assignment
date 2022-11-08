@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 from init import db, ma, bc, jwt
 from marshmallow.validate import ValidationError
 from controllers.books_controller import books_bp
@@ -44,6 +44,10 @@ def create_app():
     @app.errorhandler(ValidationError)
     def validation_err(err):
         return {"error": err.messages}, 400
+    
+    @app.errorhandler(TypeError)
+    def type_err(err):
+        abort(400)
 
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')

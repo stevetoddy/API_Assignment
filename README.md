@@ -37,17 +37,17 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ## R6 - Make an ERD for the app
 This is my ERD for my Book Store application.  
-![Book_Store_ERD](Images/book_store_ERD3.png)
+![Book_Store_ERD](Images/book_store_ERD4.png)
 
 ## R9 - Discuss the database relations to be implemented in your application
 
-My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the table’s Primary Key, the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50)), last name (String, varchar(50)), the users email address which must be unique (String, NOT NULL, unique=True), a password (String, NOT NULL) and whether the user has Admin access or not (Boolean, NOT NULL, Default=FALSE).  
+My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the table’s Primary Key, the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50), NOT NULL), last name (String, varchar(50)), the users email address which must be unique (String, NOT NULL, unique=True), a password (String, NOT NULL) and whether the user has Admin access or not (Boolean, NOT NULL, Default=FALSE).  
 
-The second table will be ‘Books’, with attributes such as the table’s Primary Key, the unique Book ID (Integer, NOT NULL), the books title (String, varchar(200)), if it is fiction (Boolean), if it is kid friendly (Boolean) and the number of copies in store (Integer). The ‘Books’ table will also have two Foreign Keys, an Author ID (Integer, NOT NULL), which will connect to a table called ‘Authors’ with a one and only one on the authors side to an optional many on the books side, and a Category ID (Integer, NOT NULL), which will connect to a table called ‘Categories’ with a one and only one on the categories side to an optional many on the books side.  
+The second table will be ‘Books’, with attributes such as the table’s Primary Key, the unique Book ID (Integer, NOT NULL), the books title (String, varchar(200), NOT NULL), if it is fiction (Boolean), if it is kid friendly (Boolean) and the number of copies in store (Integer). The ‘Books’ table will also have two Foreign Keys, an Author ID (Integer, NOT NULL), which will connect to a table called ‘Authors’ with a one and only one on the authors side to an optional many on the books side, and a Category ID (Integer, NOT NULL), which will connect to a table called ‘Categories’ with a one and only one on the categories side to an optional many on the books side.  
 
-The ‘Authors’ table will contain the attributes about the author, such as the table’s Primary Key, the unique Author ID (Integer, NOT NULL), the author’s first name (String, varchar(50)), last name (String, varchar(50)), any accolades they may have garnered (Text) and a short description called ‘about’ (Text).  
+The ‘Authors’ table will contain the attributes about the author, such as the table’s Primary Key, the unique Author ID (Integer, NOT NULL), the author’s first name (String, varchar(50), NOT NULL), last name (String, varchar(50), NOT NULL), any accolades they may have garnered (Text) and a short description called ‘about’ (Text).  
 
-The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category name (String, varchar(100)) and a short description about the category called ‘description’ (Text).  
+The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category name (String, varchar(100), NOT NULL) and a short description about the category called ‘description’ (Text).  
 
 The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment body (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.  
 
