@@ -1,5 +1,6 @@
 from flask import Flask
 from init import db, ma, bc, jwt
+from marshmallow.validate import ValidationError
 from controllers.books_controller import books_bp
 from controllers.users_controller import users_bp
 from controllers.authors_controller import authors_bp
@@ -35,7 +36,14 @@ def create_app():
     @app.errorhandler(409)
     def conflict_err(err):
         return {"error": str(err)}, 409
-
+        
+    @app.errorhandler(KeyError)
+    def key_err(err):
+        return {"error": f"Missing field: {str(err)}"}, 400
+                
+    @app.errorhandler(ValidationError)
+    def validation_err(err):
+        return {"error": err.messages}, 400
 
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
@@ -46,7 +54,7 @@ def create_app():
     # Getting JWT secret key from environment variables 
     app.config['JWT_SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-
+    # Instantiating modules 
     db.init_app(app)
     ma.init_app(app)
     bc.init_app(app)

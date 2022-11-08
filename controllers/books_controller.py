@@ -1,10 +1,10 @@
 from flask import Blueprint, request
+import json
 from init import db
 from models.book import Book, BookSchema
 from models.comment import Comment, CommentSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from controllers.auth_controller import authorise
-# from boolean_try_block import boolean_try
 
 
 books_bp = Blueprint('books', __name__, url_prefix='/books')
@@ -120,9 +120,6 @@ def update_one_book(id):
     book = db.session.scalar(stmt)
     if book:
         book.title = request.json.get('title') or book.title
-        
-        # boolean_try(book.is_fiction, 'is_fiction')
-
         # Try block for Boolean values
         try:
             book.is_fiction = request.json['is_fiction'] 

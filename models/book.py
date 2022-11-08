@@ -7,11 +7,11 @@ class Book(db.Model):
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200))
+    title = db.Column(db.String(200), nullable=False)
     is_fiction = db.Column(db.Boolean)
     is_kid_friendly = db.Column(db.Boolean)
     in_store = db.Column(db.Integer)
-    #Foreign Keys
+    # Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)    
     # Foreign Key Relationship
