@@ -17,7 +17,7 @@ class Category(db.Model):
 class CategorySchema(ma.Schema):
     # Validation 
     # Category name must be longer than 1 character
-    name = fields.String(validate=
+    name = fields.String(required=True, validate=
         Length(min=2, error="Category name must be longer than 1 character"))
     
     # Category description must be longer than 1 character

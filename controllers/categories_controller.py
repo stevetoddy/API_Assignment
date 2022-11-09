@@ -92,7 +92,7 @@ def update_category(id):
     authorise()
     
     # Loading requests through schema for validation 
-    data = CategorySchema().load(request.json)
+    data = CategorySchema().load(request.json, partial=True)
     
     # Query to find category by ID
     stmt = db.select(Category).filter_by(id=id)

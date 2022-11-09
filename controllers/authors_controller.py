@@ -112,17 +112,20 @@ def create_author():
 def update_author(id):   
     # Checking if user has admin rights
     authorise()
-         
+
+    # Loading requests through schema for validation 
+    data = AuthorSchema().load(request.json, partial=True)
+
     # Query to find author by ID
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
     
     # If found, update author with details sent
     if author:
-        author.first_name = request.json.get('first_name') or author.first_name
-        author.last_name  = request.json.get('last_name') or author.last_name
-        author.accolades  = request.json.get('accolades') or author.accolades
-        author.about  = request.json.get('about') or author.about
+        author.first_name = data.get('first_name') or author.first_name
+        author.last_name  = data.get('last_name') or author.last_name
+        author.accolades  = data.get('accolades') or author.accolades
+        author.about  = data.get('about') or author.about
         
         # Commit changes to database
         db.session.commit()
