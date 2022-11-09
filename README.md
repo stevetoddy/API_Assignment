@@ -6,7 +6,12 @@
 - [R3 - Why have you chosen this database system. What are the drawbacks compared to others?](#r3---why-have-you-chosen-this-database-system-what-are-the-drawbacks-compared-to-others)  
 - [R4 - Identify and discuss the key functionalities and benefits of an ORM](#r4---identify-and-discuss-the-key-functionalities-and-benefits-of-an-orm)  
 - [R5 - Document all endpoints for the API](#r5---document-all-endpoints-for-the-api)  
+  - [Authorisation Endpoints](#authorisation) 
+  - [Authors Endpoints](#authors) 
+  - [Books Endpoints](#books) 
+  - [Categories Endpoints](#categories) 
   - [Comments Endpoints](#comments) 
+  - [Users Endpoints](#users) 
 - [R6 - Make an ERD for the app](#r6---make-an-erd-for-the-app)  
 - [R8 - Discuss the database relations to be implemented in your application](#r8---discuss-the-database-relations-to-be-implemented-in-your-application)  
 - [R10 - Describe the way tasks are allocated and tracked in your project](#r10---describe-the-way-tasks-are-allocated-and-tracked-in-your-project)
@@ -37,9 +42,122 @@ ORMs can make accessing data much easier. They map out how certain objects will 
 
 Another very important and welcome feature of an ORM is that it increases your databases security, reducing the possibility of SQL injection threats. This is because of the layer of abstraction an ORM gives a database, forcing outside queries through the ORM before it can make it to the database itself. Of course, this is not perfect and ORM injection can happen. 
 
-Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all. 
+Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all.  
+
+---
 
 ## R5 - Document all endpoints for the API
+
+---
+
+## **AUTHORISATION**
+
+---
+
+## */auth/login*
+
+### Description
+- Login with email and password to recieve a bearer token with a 24 hour expiry time
+- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
+
+### Authorisation and Authentication: 
+ - Authentication not needed 
+ - Authorisation as admin not needed
+ - Bearer token issued upon login with a 24 hour expiry time
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/login
+
+### ARGUMENTS
+ - None
+
+### REQUIRED DATA
+ - Email address - (user.email, String)
+ - Password - (user.password, String)
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+
+```py
+{
+    "email":"steve@email.com",
+    "password":"12345Aa!"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "email": "steve@email.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2Nzk0NjE0MywianRpIjoiMmU2MjM4ZmEtZTk1Mi00NTNlLTgwYTItNTFjMjRkYTBiNGQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE2Njc5NDYxNDMsImV4cCI6MTY2ODAzMjU0M30.1C7qQ0hZX4lc7a81Cl60Qy8GI8tZUU-tP4cRRc4h2KE",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */auth/register*
+
+### Description
+- Admin user can register a new user with their email, password, first name, last name and admin status. 
+- This endpoint will return the new users id, first name, last name, email and their admin status. 
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/register
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - First name (user.first_name, String)
+ - Email address - (user.email, String)
+ - Password - (user.password, String)
+
+### OPTIONAL DATA
+ - Last name (user.last_name, String)
+ - Is Admin True/ False (user.is_admin, Boolean, default=False)
+
+### REQUEST BODY EXAMPLE 
+
+```py
+{
+    "email" : "test@test.com",
+    "password" : "123456!Aa",
+    "first_name" : "Test",
+    "last_name" : "Tester"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 6,
+    "first_name": "Test",
+    "last_name": "Tester",
+    "email": "test@test.com",
+    "is_admin": false
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
 
 ---
 
@@ -439,116 +557,6 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 - 200 OK
 
 ---
-## **AUTHORISATION**
-
----
-
-## */auth/login*
-
-### Description
-- Login with email and password to recieve a bearer token with a 24 hour expiry time
-- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
-
-### Authorisation and Authentication: 
- - Authentication not needed 
- - Authorisation as admin not needed
- - Bearer token issued upon login with a 24 hour expiry time
-
-### METHOD
- - POST
-
-### EXAMPLE
- - /auth/login
-
-### ARGUMENTS
- - None
-
-### REQUIRED DATA
- - Email address - (user.email, String)
- - Password - (user.password, String)
-
-### OPTIONAL DATA
- - None
-
-### REQUEST BODY EXAMPLE 
-
-```py
-{
-    "email":"steve@email.com",
-    "password":"12345Aa!"
-}
-```
-  
-### RESPONSE BODY EXAMPLE 
-
-```py
-{
-    "email": "steve@email.com",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2Nzk0NjE0MywianRpIjoiMmU2MjM4ZmEtZTk1Mi00NTNlLTgwYTItNTFjMjRkYTBiNGQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE2Njc5NDYxNDMsImV4cCI6MTY2ODAzMjU0M30.1C7qQ0hZX4lc7a81Cl60Qy8GI8tZUU-tP4cRRc4h2KE",
-    "is_admin": true
-}
-```
-
-### RETURN STATUS
-- 200 OK
-
----
-
-## */auth/register*
-
-### Description
-- Admin user can register a new user with their email, password, first name, last name and admin status. 
-- This endpoint will return the new users id, first name, last name, email and their admin status. 
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin required through JWT Bearer Token
-
-### METHOD
- - POST
-
-### EXAMPLE
- - /auth/register
-
-### ARGUMENTS
- - None
-  
-### REQUIRED DATA
- - First name (user.first_name, String)
- - Email address - (user.email, String)
- - Password - (user.password, String)
-
-### OPTIONAL DATA
- - Last name (user.last_name, String)
- - Is Admin True/ False (user.is_admin, Boolean, default=False)
-
-### REQUEST BODY EXAMPLE 
-
-```py
-{
-    "email" : "test@test.com",
-    "password" : "123456!Aa",
-    "first_name" : "Test",
-    "last_name" : "Tester"
-}
-```
-  
-### RESPONSE BODY EXAMPLE 
-
-```py
-{
-    "id": 6,
-    "first_name": "Test",
-    "last_name": "Tester",
-    "email": "test@test.com",
-    "is_admin": false
-}
-```
-
-### RETURN STATUS
-- 201 CREATED
-
----
 
 ## **BOOKS**
 
@@ -606,8 +614,6 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 - 201 CREATED
 
 ---
----
-
 
 ## **CATEGORIES**
 
@@ -823,9 +829,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - None
   
 ### REQUIRED DATA
-One of either:
- - Category Name (category.name, String)
- - Description (category.description, String)
+- None
 
 ### OPTIONAL DATA
  - Category Name (category.name, String)
@@ -895,6 +899,284 @@ One of either:
 - 200 OK
 
 ---
+
+## **COMMENTS**
+
+---
+
+## */comments*
+
+### Description
+- Return all comments made by all users.
+- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments
+
+### ARGUMENTS
+ - None
+    
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+[
+    {
+        "id": 1,
+        "body": "Name of the Wind is a fantastic take on the young hero trope",
+        "book": {
+            "title": "The Name of the Wind",
+            "author": {
+                "first_name": "Patrick",
+                "last_name": "Rothfuss"
+            }
+        },
+        "user": {
+            "id": 2,
+            "first_name": "Steve",
+            "last_name": "Thomas"
+        }
+    },
+    {
+        "id": 2,
+        "body": "Book 2 of 3 in The Kingkiller Chronicles",
+        "book": {
+            "title": "The Wise Man's Fear",
+            "author": {
+                "first_name": "Patrick",
+                "last_name": "Rothfuss"
+            }
+        },
+        "user": {
+            "id": 1,
+            "first_name": "Steve",
+            "last_name": "Todorovic"
+        }
+    },
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Return a specific comment by ID.
+- This end point will return the typical comment schema for a specific comment, identified by the comment ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments/1
+
+### ARGUMENTS
+ - Comment ID (comment.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 1,
+    "body": "Name of the Wind is a fantastic take on the young hero trope",
+    "book": {
+        "title": "The Name of the Wind",
+        "author": {
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        }
+    },
+    "user": {
+        "id": 2,
+        "first_name": "Steve",
+        "last_name": "Thomas"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */comments/user/\<int:user_id\>*
+
+### Description
+- Return all comments made by a specific user.
+- This end point will return the typical comment schema from a specific user, identified by their User ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /comments/user/1
+
+### ARGUMENTS
+ - User ID (comment.user_id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+ - 
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 1,
+    "body": "Name of the Wind is a fantastic take on the young hero trope",
+    "book": {
+        "title": "The Name of the Wind",
+        "author": {
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        }
+    },
+    "user": {
+        "id": 2,
+        "first_name": "Steve",
+        "last_name": "Thomas"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+  
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Update the body text of a specific comment, by ID.
+- This end point will return the typical comment schema with an updated comment body.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - PUT / PATCH
+
+### EXAMPLE
+ - /comments/3
+
+### ARGUMENTS
+ - Comment ID (comment.id, Integer)
+  
+### REQUIRED DATA
+ - Comment Body (comment.body, Text)
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+```py
+{
+    "body": "Updated comment body"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 3,
+    "body": "Updated comment body",
+    "book": {
+        "title": "The Way of Kings",
+        "author": {
+            "first_name": "Brandon",
+            "last_name": "Sanderson"
+        }
+    },
+    "user": {
+        "id": 3,
+        "first_name": "Sebastian",
+        "last_name": "Townsend"
+    }
+}
+```
+
+### RETURN STATUS
+- 200 OK
+  
+---
+
+## */comments/\<int:id\>*
+
+### Description
+- Delete a specific comment, by ID.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin required through JWT Bearer Token  
+  
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /comments/1
+
+### ARGUMENTS
+ - Comment ID (comment.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "message": "Comment No.1 deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+--- 
+## Create comments endpoint found [here]() in Books endpoints
+
 ---
 
 ## **USERS**
@@ -1147,10 +1429,10 @@ One of either:
 
 ---
 
-## */categories\<int:id\>*
+## */users\<int:id\>*
 
 ### Description
-- Delete a category entity in the database using it's ID. 
+- Delete a user entity in the database using it's ID. 
 - This endpoint will return a response message informing the client of a successful deletion.  
 
 ### Authorisation and Authentication: 
@@ -1161,7 +1443,7 @@ One of either:
  - DELETE
 
 ### EXAMPLE
- - /categories/6
+ - /users/1
 
 ### ARGUMENTS
  - None
@@ -1179,262 +1461,13 @@ One of either:
 
 ```py
 {
-    "message": "Category 'Another name' deleted successfully"
+    "message": "User 'Steve Todorovic' deleted successfully"
 }
 ```
 
 ### RETURN STATUS
 - 200 OK
 
----
----
-
-## **COMMENTS**
-
----
-
-## */comments*
-
-### Description
-- Return all comments made by all users.
-- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin not needed
-
-### METHOD
- - GET
-
-### EXAMPLE
- - /comments
-
-### ARGUMENTS
- - None
-
-### REQUEST BODY EXAMPLE 
-- None
-  
-### RESPONSE BODY EXAMPLE 
-```py
-[
-    {
-        "id": 1,
-        "body": "Name of the Wind is a fantastic take on the young hero trope",
-        "book": {
-            "title": "The Name of the Wind",
-            "author": {
-                "first_name": "Patrick",
-                "last_name": "Rothfuss"
-            }
-        },
-        "user": {
-            "id": 2,
-            "first_name": "Steve",
-            "last_name": "Thomas"
-        }
-    },
-    {
-        "id": 2,
-        "body": "Book 2 of 3 in The Kingkiller Chronicles",
-        "book": {
-            "title": "The Wise Man's Fear",
-            "author": {
-                "first_name": "Patrick",
-                "last_name": "Rothfuss"
-            }
-        },
-        "user": {
-            "id": 1,
-            "first_name": "Steve",
-            "last_name": "Todorovic"
-        }
-    },
-```
-
-### RETURN STATUS
-- 200 OK
-
----
-
-## */comments/\<int:id\>*
-
-### Description
-- Return a specific comment by ID.
-- This end point will return the typical comment schema for a specific comment, identified by the comment ID.
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin not needed
-
-### METHOD
- - GET
-
-### EXAMPLE
- - /comments/1
-
-### ARGUMENTS
- - id (int)
-
-### REQUEST BODY EXAMPLE 
-- None
-  
-### RESPONSE BODY EXAMPLE 
-```py
-{
-    "id": 1,
-    "body": "Name of the Wind is a fantastic take on the young hero trope",
-    "book": {
-        "title": "The Name of the Wind",
-        "author": {
-            "first_name": "Patrick",
-            "last_name": "Rothfuss"
-        }
-    },
-    "user": {
-        "id": 2,
-        "first_name": "Steve",
-        "last_name": "Thomas"
-    }
-}
-```
-
-### RETURN STATUS
-- 200 OK
-
----
-
-## */comments/user/\<int:user_id\>*
-
-### Description
-- Return all comments made by a specific user.
-- This end point will return the typical comment schema from a specific user, identified by their User ID.
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin not needed
-
-### METHOD
- - GET
-
-### EXAMPLE
- - /comments/user/1
-
-### ARGUMENTS
- - user_id (int)
-
-### REQUEST BODY EXAMPLE 
-- None
-  
-### RESPONSE BODY EXAMPLE 
-```py
-{
-    "id": 1,
-    "body": "Name of the Wind is a fantastic take on the young hero trope",
-    "book": {
-        "title": "The Name of the Wind",
-        "author": {
-            "first_name": "Patrick",
-            "last_name": "Rothfuss"
-        }
-    },
-    "user": {
-        "id": 2,
-        "first_name": "Steve",
-        "last_name": "Thomas"
-    }
-}
-```
-
-### RETURN STATUS
-- 200 OK
-  
----
-
-## */comments/\<int:id\>*
-
-### Description
-- Update the body text of a specific comment, by ID.
-- This end point will return the typical comment schema with an updated comment body.
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin not needed
-
-### METHOD
- - PUT / PATCH
-
-### EXAMPLE
- - /comments/3
-
-### ARGUMENTS
- - id (int)
-
-### REQUEST BODY EXAMPLE 
-```py
-{
-    "body": "Updated comment body"
-}
-```
-  
-### RESPONSE BODY EXAMPLE 
-```py
-{
-    "id": 3,
-    "body": "Updated comment body",
-    "book": {
-        "title": "The Way of Kings",
-        "author": {
-            "first_name": "Brandon",
-            "last_name": "Sanderson"
-        }
-    },
-    "user": {
-        "id": 3,
-        "first_name": "Sebastian",
-        "last_name": "Townsend"
-    }
-}
-```
-
-### RETURN STATUS
-- 200 OK
-  
----
-
-## */comments/\<int:id\>*
-
-### Description
-- Delete a specific comment, by ID.
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin required through JWT Bearer Token  
-  
-### METHOD
- - DELETE
-
-### EXAMPLE
- - /comments/1
-
-### ARGUMENTS
- - id (int)
-
-### REQUEST BODY EXAMPLE 
- - None
-
-### RESPONSE BODY EXAMPLE 
-```py
-{
-    "message": "Comment No.1 deleted successfully"
-}
-```
-
-### RETURN STATUS
-- 200 OK
-
---- 
-### *Create comments endpoint found [here]() in Books endpoints*
 ---
 
 

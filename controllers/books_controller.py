@@ -5,6 +5,7 @@ from models.comment import Comment, CommentSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from controllers.auth_controller import authorise
 
+
 # Books Blueprint
 books_bp = Blueprint('books', __name__, url_prefix='/books')
 
@@ -108,15 +109,15 @@ def title_book(title):
 def create_book():
 
     # Loading requests through schema for validation 
-    data = BookSchema().load(request.json)
+    data = BookSchema().load(request.json, partial=True)
 
     book = Book(
         title = data['title'],
         is_fiction = data['is_fiction'],
         is_kid_friendly  = data['is_kid_friendly'],
         in_store = data['in_store'],
-        author_id = data['author_id'],
-        category_id = data['category_id']
+        author = data['author'],
+        category = data['category']
     )
 
     # Add new book and commit to database
@@ -167,7 +168,7 @@ def update_one_book(id):
     authorise()
 
     # Loading requests through schema for validation 
-    data = CommentSchema().load(request.json)
+    data = BookSchema().load(request.json, partial=True)
 
     # Query to find book by ID
     stmt = db.select(Book).filter_by(id=id)
