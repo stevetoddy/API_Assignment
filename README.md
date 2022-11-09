@@ -136,7 +136,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - /author/1
 
 ### ARGUMENTS
- - id (author.id, integer)
+ - id (author.id, Integer)
 
 ### REQUIRED DATA
  - None
@@ -309,12 +309,12 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - None
 
 ### REQUIRED DATA
- - First name (first_name, String)
- - Last name (last_name, String)
+ - First name (author.first_name, String)
+ - Last name (author.last_name, String)
 
 ### OPTIONAL DATA
- - About (about, Text)
- - Accolades (accolades, Text)
+ - About (author.about, Text)
+ - Accolades (author.accolades, Text)
 
 ### REQUEST BODY EXAMPLE 
 
@@ -365,13 +365,13 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - id (author.id, Integer)
 
 ### REQUIRED DATA
- - One of the attribute fields
+ - None
 
 ### OPTIONAL DATA
- - First name (first_name, String)
- - Last name (last_name, String)
- - About (about, Text)
- - Accolades (accolades, Text)
+ - First name (author.first_name, String)
+ - Last name (author.last_name, String)
+ - About (author.about, Text)
+ - Accolades (author.accolades, Text)
 
 ### REQUEST BODY EXAMPLE 
 
@@ -497,7 +497,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ## */auth/register*
 
 ### Description
-- Admin user can register a new user with their email, password, first name and last name. 
+- Admin user can register a new user with their email, password, first name, last name and admin status. 
 - This endpoint will return the new users id, first name, last name, email and their admin status. 
 
 ### Authorisation and Authentication: 
@@ -514,11 +514,13 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - None
   
 ### REQUIRED DATA
+ - First name (user.first_name, String)
  - Email address - (user.email, String)
  - Password - (user.password, String)
 
 ### OPTIONAL DATA
- - None
+ - Last name (user.last_name, String)
+ - Is Admin True/ False (user.is_admin, Boolean, default=False)
 
 ### REQUEST BODY EXAMPLE 
 
@@ -540,62 +542,6 @@ Some issues with ORMs are that it can slow down the execution of queries compare
     "last_name": "Tester",
     "email": "test@test.com",
     "is_admin": false
-}
-```
-
-### RETURN STATUS
-- 201 CREATED
-
----
-
-## */auth/register/admin*
-
-### Description
-- Admin user can register a new admin user with their email, password, first name and last name. 
-- This endpoint will return the new users id, first name, last name, email and their admin status.  
-
-### Authorisation and Authentication: 
- - Authentication required through JWT Bearer Token 
- - Authorisation as admin required through JWT Bearer Token
-
-### METHOD
- - POST
-
-### EXAMPLE
- - /auth/register/admin
-
-### ARGUMENTS
- - None
-  
-### REQUIRED DATA
- - Email address - (user.email, String)
- - Password - (user.password, String)
- - First name - (user.first_name, String)
- - Last name - (user.last_name, String)
-
-### OPTIONAL DATA
- - None
-
-### REQUEST BODY EXAMPLE 
-
-```py
-{
-    "email" : "admin@test.com",
-    "password" : "12312312!Aa",
-    "first_name" : "Adam",
-    "last_name" : "Inn"
-}
-```
-  
-### RESPONSE BODY EXAMPLE 
-
-```py
-{
-    "id": 7,
-    "first_name": "Adam",
-    "last_name": "Inn",
-    "email": "admin@test.com",
-    "is_admin": true
 }
 ```
 

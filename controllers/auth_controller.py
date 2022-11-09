@@ -37,7 +37,8 @@ def auth_register():
             email = data.get('email'),
             password = bc.generate_password_hash(data['password']).decode('utf8'),
             first_name = data.get('first_name'),
-            last_name = data.get('last_name')
+            last_name = data.get('last_name'),
+            is_admin = data.get('is_admin')
         )
         
         # Add user and commit to database
@@ -71,34 +72,3 @@ def auth_login():
     else:
         return {'error': 'Invalid email and password'}, 401
 
-
-# Create a new admin user (must have admin rights)
-@auth_bp.route('/register/admin/', methods=['POST'])
-@jwt_required()
-def admin_register():
-    # Checking if user has admin rights
-    authorise()
-    
-    # Loading requests through schema for validation 
-    data = UserSchema().load(request.json)
-
-    # Try block checking if email exists already   
-    try:       
-        user = User(
-            email = data.get('email'),
-            password = bc.generate_password_hash(data['password']).decode('utf8'),
-            first_name = data.get('first_name'),
-            last_name = data.get('last_name'),
-            is_admin = True
-        )
-        
-        # Add user and commit to database
-        db.session.add(user)
-        db.session.commit()
-        
-        # Respond to client with the new admin with the password excluded 
-        return UserSchema(exclude=['password']).dump(user), 201
-    
-    # Response to client is email is already in use
-    except IntegrityError:
-        return {'error': 'Email address already in use'}, 409
