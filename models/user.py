@@ -31,7 +31,7 @@ class UserSchema(ma.Schema):
 
     # Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
     email = fields.String(required=True, validate= 
-        Regexp('^(?=\S{6,}$)\w+@\w+.\w+$', error="This does not look like a valid email address"))
+        Regexp('^(?=\S{6,}$)\w+@\w+\.\w+$', error="This does not look like a valid email address"))
 
     # Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
     password = fields.String(required=True, validate= 

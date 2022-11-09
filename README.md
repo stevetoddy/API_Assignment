@@ -1168,22 +1168,19 @@ One of either:
  - User ID (user.id, Integer)
  - 
 ### REQUIRED DATA
+- None
+  
+### OPTIONAL DATA
  - First Name (user.first_name, String)
+ - Last Name (user.last_name, String)
  - Email Address (user.email, String)
  - Password (user.password, String)
-
-### OPTIONAL DATA
- - Last Name (user.last_name, String)
 
 ### REQUEST BODY EXAMPLE
 
 ```py
 {
-    "id": 1,
-    "first_name": "Steve",
-    "last_name": "Todorovic",
-    "email": "new@email.com",
-    "is_admin": true
+    "email": "new@email.com"
 }
 ```
 
