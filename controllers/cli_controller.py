@@ -158,35 +158,35 @@ def seed_db():
     users = [
         User(
             email = 'steve@email.com',
-            password=bc.generate_password_hash('123').decode('utf-8'),
+            password=bc.generate_password_hash('12345Aa!').decode('utf-8'),
             first_name = 'Steve',
             last_name = 'Todorovic',
             is_admin = True
         ),        
         User(
             email = 'denna@email.com',
-            password=bc.generate_password_hash('123').decode('utf-8'),
+            password=bc.generate_password_hash('12345Aa!').decode('utf-8'),
             first_name = 'Denna',
             last_name = 'Thomas',
             is_admin = False
         ),
         User(
             email = 'bast@email.com',
-            password=bc.generate_password_hash('123').decode('utf-8'),
+            password=bc.generate_password_hash('12345Aa!').decode('utf-8'),
             first_name = 'Sebastian',
             last_name = 'Townsend',
             is_admin = False
         ),
         User(
             email = 'ben@email.com',
-            password=bc.generate_password_hash('123').decode('utf-8'),
+            password=bc.generate_password_hash('12345Aa!').decode('utf-8'),
             first_name = 'Ben',
             last_name = 'Abenathy',
             is_admin = False
         ),
         User(
             email = 'sim@email.com',
-            password=bc.generate_password_hash('123').decode('utf-8'),
+            password=bc.generate_password_hash('12345Aa!').decode('utf-8'),
             first_name = 'Simon',
             last_name = 'Williams',
             is_admin = False

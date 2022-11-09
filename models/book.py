@@ -13,7 +13,7 @@ class Book(db.Model):
     in_store = db.Column(db.Integer)
     # Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)    
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))    
     # Foreign Key Relationship
     author = db.relationship('Author', back_populates='books')    
     category = db.relationship('Category', back_populates='books')

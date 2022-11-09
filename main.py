@@ -49,6 +49,10 @@ def create_app():
     def type_err(err):
         abort(400)
 
+    @app.errorhandler(ValueError)
+    def value_err(err):
+        abort(400)
+
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     

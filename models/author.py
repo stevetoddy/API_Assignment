@@ -13,7 +13,7 @@ class Author(db.Model):
     accolades = db.Column(db.Text)
     about = db.Column(db.Text)
     # Foreign Key Relationship
-    books = db.relationship('Book', back_populates='author')
+    books = db.relationship('Book', back_populates='author', cascade='all, delete')
 
 # Marshmallow schemas 
 class AuthorSchema(ma.Schema):

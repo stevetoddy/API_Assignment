@@ -41,12 +41,552 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ## R5 - Document all endpoints for the API
 
+---
+
 ## **AUTHORS**
+
+---
+
+## */author*
+
+### Description
+- Return a list of all authors in the database.
+- This end point will return every author's information including the id, first name, last name, about, accolades and a nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id.
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /author
+
+### ARGUMENTS
+ - None
+
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "first_name": "Patrick",
+        "last_name": "Rothfuss",
+        "about": "Patrick James Rothfuss is an American author.",
+        "accolades": "Patrick has won several awards.",
+        "books": [
+            {
+                "title": "The Name of the Wind",
+                "in_store": 0,
+                "id": 1
+            },
+            {
+                "title": "The Wise Man's Fear",
+                "in_store": 2,
+                "id": 2
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "first_name": "Brandon",
+        "last_name": "Sanderson",
+        "about": "Brandon Sanderson is an American author of epic fantasy and science fiction.",
+        "accolades": "Sanderson has been nominated for and also won multiple awards.",
+        "books": [
+            {
+                "title": "The Way of Kings",
+                "in_store": 4,
+                "id": 3
+            }
+        ]
+    },
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */author/\<int:id\>*
+
+### Description
+- Return an authors in the database by ID.
+- This end point will return an author's information including the id, first name, last name, about, accolades and a nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id.
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /author/1
+
+### ARGUMENTS
+ - id (author.id, integer)
+
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "first_name": "Patrick",
+    "last_name": "Rothfuss",
+    "about": "Patrick James Rothfuss is an American author.",
+    "accolades": "Patrick has won several awards.",
+    "books": [
+        {
+            "title": "The Name of the Wind",
+            "in_store": 0,
+            "id": 1
+        },
+        {
+            "title": "The Wise Man's Fear",
+            "in_store": 2,
+            "id": 2
+        }
+    ]
+},
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */author/first_name*
+
+### Description
+- Return a list of authors in the database by their first name.
+- This end point will return any author's information that have the same first name that was queried. Returned information includes the id, first name, last name, about, accolades and a nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id.
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /author/first_name/Patrick
+
+### ARGUMENTS
+ - First name (author.first_name, String)
+
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "first_name": "Patrick",
+        "last_name": "Rothfuss",
+        "about": "Patrick James Rothfuss is an American author.",
+        "accolades": "Patrick has won several awards.",
+        "books": [
+            {
+                "title": "The Name of the Wind",
+                "in_store": 0,
+                "id": 1
+            },
+            {
+                "title": "The Wise Man's Fear",
+                "in_store": 2,
+                "id": 2
+            }
+        ]
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */author/last_name*
+
+### Description
+- Return a list of authors in the database by their last name.
+- This end point will return any author's information that have the same last name that was queried. Returned information includes the id, first name, last name, about, accolades and a nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id.
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not needed
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /author/last_name/Seuss
+
+### ARGUMENTS
+ - Last name (author.last_name, String)
+
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 3,
+        "first_name": "Dr",
+        "last_name": "Seuss",
+        "about": "Theodor Seuss Geisel was an American children's author and cartoonist.",
+        "accolades": "His work includes many of the most popular children's books of all time.",
+        "books": [
+            {
+                "title": "Cat in the Hat",
+                "in_store": 5,
+                "id": 6
+            }
+        ]
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */author*
+
+### Description
+- Create a new author resource in your database.
+- This end point will create a new author entity using the required fields, first name and last name, and can include the optional fields of about and accolades. Returned information includes the new author's id, first name, last name, about, accolades fields. A nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id. This will be empty on author creation as books require an author ID to be created, so need to be created after the books author is already in the database.  
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token  
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /author
+
+### ARGUMENTS
+ - None
+
+### REQUIRED DATA
+ - First name (first_name, String)
+ - Last name (last_name, String)
+
+### OPTIONAL DATA
+ - About (about, Text)
+ - Accolades (accolades, Text)
+
+### REQUEST BODY EXAMPLE 
+
+```py
+{
+    "first_name": "Test",
+    "last_name": "Tester",
+    "about": "Test author",
+    "accolades": "Test Author of 2022"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 7,
+    "first_name": "Test",
+    "last_name": "Tester",
+    "about": "Test author",
+    "accolades": "Test Author of 2022",
+    "books": []
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
+
+---
+
+## */author/\<int:id\>*
+
+### Description
+- Update an author resource in your database.
+- This end point will update an existing author entity using any of the fields, first name, last name, about and accolades. Returned information includes the updated author's id, first name, last name, about, accolades fields. A nested list including any books they have written that are also in the database. The books nested list included the attributes title, inventory numbers and book id.  
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token  
+
+### METHOD
+ - POST, PATCH
+
+### EXAMPLE
+ - /author/7
+
+### ARGUMENTS
+ - id (author.id, Integer)
+
+### REQUIRED DATA
+ - One of the attribute fields
+
+### OPTIONAL DATA
+ - First name (first_name, String)
+ - Last name (last_name, String)
+ - About (about, Text)
+ - Accolades (accolades, Text)
+
+### REQUEST BODY EXAMPLE 
+
+```py
+{
+    "last_name": "Newer"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 7,
+    "first_name": "Test",
+    "last_name": "Newer",
+    "about": "Test author",
+    "accolades": "Test Author of 2022",
+    "books": []
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */author/\<int:id\>*
+
+### Description
+- Delete an author resource in your database, inlcuding all of their books.
+- This end point will delete an existing author entity, including any books they have written that are linked by the Author ID, as book entities require an Author ID. Returned information is a response message informing successful deletion.  
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token  
+
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /author/7
+
+### ARGUMENTS
+ - id (author.id, Integer)
+
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+ - None
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "message": "Author 'Test Newer' deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
 ## **AUTHORISATION**
+
+---
+
+## */auth/login*
+
+### Description
+- Login with email and password to recieve a bearer token with a 24 hour expiry time
+- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
+
+### Authorisation and Authentication: 
+ - Authentication not needed 
+ - Authorisation as admin not needed
+ - Bearer token issued upon login with a 24 hour expiry time
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/login
+
+### ARGUMENTS
+ - None
+
+### REQUEST BODY EXAMPLE 
+```py
+{
+    "email":"steve@email.com",
+    "password":"12345Aa!"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "email": "steve@email.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2Nzk0NjE0MywianRpIjoiMmU2MjM4ZmEtZTk1Mi00NTNlLTgwYTItNTFjMjRkYTBiNGQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE2Njc5NDYxNDMsImV4cCI6MTY2ODAzMjU0M30.1C7qQ0hZX4lc7a81Cl60Qy8GI8tZUU-tP4cRRc4h2KE",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */auth/register*
+
+### Description
+- Admin user can register a new user with their email, password, first name and last name. 
+- This endpoint will return the new users id, first name, last name, email and their admin status. 
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/register
+
+### ARGUMENTS
+ - None
+
+### REQUEST BODY EXAMPLE 
+```py
+{
+    "email" : "test@test.com",
+    "password" : "123456!Aa",
+    "first_name" : "Test",
+    "last_name" : "Tester"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 6,
+    "first_name": "Test",
+    "last_name": "Tester",
+    "email": "test@test.com",
+    "is_admin": false
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
+
+---
+
+## */auth/register/admin*
+
+### Description
+- Admin user can register a new admin user with their email, password, first name and last name. 
+- This endpoint will return the new users id, first name, last name, email and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/register/admin
+
+### ARGUMENTS
+ - None
+
+### REQUEST BODY EXAMPLE 
+```py
+{
+    "email" : "admin@test.com",
+    "password" : "12312312!Aa",
+    "first_name" : "Adam",
+    "last_name" : "Inn"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+```py
+{
+    "id": 7,
+    "first_name": "Adam",
+    "last_name": "Inn",
+    "email": "admin@test.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
+
+---
 ## **BOOKS**
+
+---
+---
+
 ## **CATEGORIES**
+
+---
+---
+
 ## **USERS**
 
+---
 ---
 
 ## **COMMENTS**
@@ -269,7 +809,8 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### Authorisation and Authentication: 
  - Authentication required through JWT Bearer Token 
- - Authorisation as admin through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token  
+  
 ### METHOD
  - DELETE
 

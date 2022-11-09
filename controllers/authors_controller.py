@@ -48,13 +48,13 @@ def author_first_name(name):
      
     # Query to find author by first name
     stmt = db.select(Author).filter_by(first_name=name)
-    author = db.session.scalar(stmt)
+    author = db.session.scalars(stmt)
     
     # If found
     if author:
 
         # Respond to client with author
-        return AuthorSchema().dump(author)
+        return AuthorSchema(many=True).dump(author)
     
     # If not found
     else:
@@ -68,13 +68,13 @@ def author_last_name(name):
          
     # Query to find author by last name
     stmt = db.select(Author).filter_by(last_name=name)
-    author = db.session.scalar(stmt)
+    author = db.session.scalars(stmt)
     
     # If found
     if author:
         
         # Respond to client with Author
-        return AuthorSchema().dump(author)
+        return AuthorSchema(many=True).dump(author)
     
     # If not found
     else:
