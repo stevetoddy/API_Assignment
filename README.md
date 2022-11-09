@@ -463,7 +463,15 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ### ARGUMENTS
  - None
 
+### REQUIRED DATA
+ - Email address - (user.email, String)
+ - Password - (user.password, String)
+
+### OPTIONAL DATA
+ - None
+
 ### REQUEST BODY EXAMPLE 
+
 ```py
 {
     "email":"steve@email.com",
@@ -472,6 +480,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ```
   
 ### RESPONSE BODY EXAMPLE 
+
 ```py
 {
     "email": "steve@email.com",
@@ -503,8 +512,16 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### ARGUMENTS
  - None
+  
+### REQUIRED DATA
+ - Email address - (user.email, String)
+ - Password - (user.password, String)
+
+### OPTIONAL DATA
+ - None
 
 ### REQUEST BODY EXAMPLE 
+
 ```py
 {
     "email" : "test@test.com",
@@ -515,6 +532,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ```
   
 ### RESPONSE BODY EXAMPLE 
+
 ```py
 {
     "id": 6,
@@ -548,8 +566,18 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### ARGUMENTS
  - None
+  
+### REQUIRED DATA
+ - Email address - (user.email, String)
+ - Password - (user.password, String)
+ - First name - (user.first_name, String)
+ - Last name - (user.last_name, String)
+
+### OPTIONAL DATA
+ - None
 
 ### REQUEST BODY EXAMPLE 
+
 ```py
 {
     "email" : "admin@test.com",
@@ -560,6 +588,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ```
   
 ### RESPONSE BODY EXAMPLE 
+
 ```py
 {
     "id": 7,
@@ -574,17 +603,645 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 - 201 CREATED
 
 ---
+
 ## **BOOKS**
 
 ---
+
+## */books*
+
+### Description
+- Admin user can register a new admin user with their email, password, first name and last name. 
+- This endpoint will return the new users id, first name, last name, email and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /auth/register/admin
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE 
+
+```py
+{
+    "email" : "admin@test.com",
+    "password" : "12312312!Aa",
+    "first_name" : "Adam",
+    "last_name" : "Inn"
+}
+```
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 7,
+    "first_name": "Adam",
+    "last_name": "Inn",
+    "email": "admin@test.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
+
+---
 ---
 
+
 ## **CATEGORIES**
+
+---
+
+## */categories*
+
+### Description
+- Return a list of all the category entities in the database. 
+- This endpoint will return the category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /categories
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "name": "Fantasy",
+        "description": "Imaginative fiction dependent for effect on strangeness of setting (such as other worlds or times) and of characters (such as supernatural or unnatural beings)."
+    },
+    {
+        "id": 2,
+        "name": "Sci-Fi",
+        "description": "Science fiction, also often known as \"sci-fi\", is a genre of literature that is imaginative and based around science. It relies heavily on scientific facts, theories, and principles as support for its settings, characters, themes, and plot."
+    },
+    {
+        "id": 3,
+        "name": "Children",
+        "description": "Children's books are everything from Young Adult down to board books for your teething kiddo, however, a book is considered a children's book when it's intended for an audience between 0-8 years old."
+    },
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories/\<int:id\>*
+
+### Description
+- Return a category entity stored in the database from it's ID. 
+- This endpoint will return the category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /categories/1
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "name": "Fantasy",
+    "description": "Imaginative fiction dependent for effect on strangeness of setting (such as other worlds or times) and of characters (such as supernatural or unnatural beings)."
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories/\<string:name\>*
+
+### Description
+- Return a category entity stored in the database from it's name. 
+- This endpoint will return the category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /categories/Fantasy
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "name": "Fantasy",
+    "description": "Imaginative fiction dependent for effect on strangeness of setting (such as other worlds or times) and of characters (such as supernatural or unnatural beings)."
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories*
+
+### Description
+- Create a new category entity in the database. 
+- This endpoint will return the new category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /categories
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - Category Name (category.name, String)
+ - Description (category.description, String)
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+
+```py
+{
+    "name": "Test Categpry",
+    "description": "Test category description"
+}
+```
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 6,
+    "name": "Test Categpry",
+    "description": "Test category description"
+}
+```
+
+### RETURN STATUS
+- 201 CREATED
+
+---
+
+## */categories\<int:id\>*
+
+### Description
+- Update a category entity in the database using it's ID. 
+- This endpoint will return the updated category entity including the category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST, PATCH
+
+### EXAMPLE
+ - /categories/6
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+One of either:
+ - Category Name (category.name, String)
+ - Description (category.description, String)
+
+### OPTIONAL DATA
+ - Category Name (category.name, String)
+ - Description (category.description, String)
+
+### REQUEST BODY EXAMPLE
+
+```py
+{
+    "name": "Another name",
+    "description": "Another description"
+}
+```
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 6,
+    "name": "Another name",
+    "description": "Another description"
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories\<int:id\>*
+
+### Description
+- Delete a category entity in the database using it's ID. 
+- This endpoint will return a response message informing the client of a successful deletion.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /categories/6
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "message": "Category 'Another name' deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
 
 ---
 ---
 
 ## **USERS**
+
+---
+
+## */users*
+
+### Description
+- Return a list of all the user entities in the database. 
+- This endpoint will return the user id, first name, last name, email address and their admin status.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /users
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "first_name": "Steve",
+        "last_name": "Todorovic",
+        "email": "steve@email.com",
+        "is_admin": true
+    },
+    {
+        "id": 2,
+        "first_name": "Sebastian",
+        "last_name": "Townsend",
+        "email": "bast@email.com",
+        "is_admin": false
+    },
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+---
+
+## */users/\<int:id\>*
+
+### Description
+- Return a user entity stored in the database from it's ID. 
+- This endpoint will return the user id, first name, last name, email address and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /users/1
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "first_name": "Steve",
+    "last_name": "Todorovic",
+    "email": "steve@email.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */users/first_name/\<string:name\>*
+
+### Description
+- Return a user entity stored in the database from it's first name. 
+- This endpoint will return the user id, first name, last name, email address and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /user/first_name/Steve
+
+### ARGUMENTS
+ - First Name (user.first_name, String)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "first_name": "Steve",
+    "last_name": "Todorovic",
+    "email": "steve@email.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */users/last_name/\<string:name\>*
+
+### Description
+- Return a user entity stored in the database from it's last name. 
+- This endpoint will return the user id, first name, last name, email address and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /user/last_name/Todorovic
+
+### ARGUMENTS
+ - Last Name (user.last_name, String)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "first_name": "Steve",
+    "last_name": "Todorovic",
+    "email": "steve@email.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## For **creating a new user**, the endpoint can be found [here](#authregister) in the Auth documentation
+
+---
+
+## */users\<int:id\>*
+
+### Description
+- Update a user entity in the database using it's ID. 
+- This endpoint will return the updated user id, first name, last name, email address and their admin status.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST, PATCH
+
+### EXAMPLE
+ - /user/1
+
+### ARGUMENTS
+ - User ID (user.id, Integer)
+ - 
+### REQUIRED DATA
+ - First Name (user.first_name, String)
+ - Email Address (user.email, String)
+ - Password (user.password, String)
+
+### OPTIONAL DATA
+ - Last Name (user.last_name, String)
+
+### REQUEST BODY EXAMPLE
+
+```py
+{
+    "id": 1,
+    "first_name": "Steve",
+    "last_name": "Todorovic",
+    "email": "new@email.com",
+    "is_admin": true
+}
+```
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "first_name": "Steve",
+    "last_name": "Todorovic",
+    "email": "new@email.com",
+    "is_admin": true
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories\<int:id\>*
+
+### Description
+- Delete a category entity in the database using it's ID. 
+- This endpoint will return a response message informing the client of a successful deletion.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /categories/6
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "message": "Category 'Another name' deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
 
 ---
 ---

@@ -8,7 +8,7 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text) 
+    description = db.Column(db.Text, nullable=False) 
     
     # Foreign Key Relationship
     books = db.relationship('Book', back_populates='category')
@@ -17,11 +17,11 @@ class Category(db.Model):
 class CategorySchema(ma.Schema):
     # Validation 
     # Category name must be longer than 1 character
-    name = fields.String(required=True, validate=
+    name = fields.String(validate=
         Length(min=2, error="Category name must be longer than 1 character"))
     
     # Category description must be longer than 1 character
-    name = fields.String(required=True, validate=
+    description = fields.String(validate=
         Length(min=2, error="Category description must be longer than 1 character"))
 
     class Meta:

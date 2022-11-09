@@ -89,7 +89,7 @@ def update_user(id):
     authorise()
     
     # Loading requests through schema for validation 
-    data = UserSchema().load(request.json)
+    data = UserSchema().load(request.json, partial=True)
     
     # Query to find user by ID
     stmt = db.select(User).filter_by(id=id)

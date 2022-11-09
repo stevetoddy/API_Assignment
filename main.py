@@ -1,6 +1,7 @@
 from flask import Flask, abort
 from init import db, ma, bc, jwt
-from marshmallow.validate import ValidationError
+from marshmallow.exceptions import ValidationError
+from sqlalchemy.exc import StatementError
 from controllers.books_controller import books_bp
 from controllers.users_controller import users_bp
 from controllers.authors_controller import authors_bp
@@ -17,6 +18,28 @@ def create_app():
 
 
     # Error handlers 
+            
+    @app.errorhandler(KeyError)
+    def key_err(err):
+        return {"error": f"Missing field: {str(err)}"}, 400
+                
+    @app.errorhandler(ValidationError)
+    def validation_err(err):
+        return {"error": err.messages}, 400
+    
+    # @app.errorhandler(TypeError)
+    # def type_err(err):
+    #     abort(400)
+
+    # @app.errorhandler(ValueError)
+    # def value_err(err):
+    #     abort(400)
+    
+    @app.errorhandler(StatementError)
+    def statement_err(err):
+        return {"error": "Make sure all values are valid and of the correct type"}, 400
+
+
     @app.errorhandler(400)
     def bad_request(err):
         return {"error": str(err)}, 400
@@ -36,22 +59,7 @@ def create_app():
     @app.errorhandler(409)
     def conflict_err(err):
         return {"error": str(err)}, 409
-        
-    @app.errorhandler(KeyError)
-    def key_err(err):
-        return {"error": f"Missing field: {str(err)}"}, 400
-                
-    @app.errorhandler(ValidationError)
-    def validation_err(err):
-        return {"error": err.messages}, 400
-    
-    @app.errorhandler(TypeError)
-    def type_err(err):
-        abort(400)
 
-    @app.errorhandler(ValueError)
-    def value_err(err):
-        abort(400)
 
     # Getting our database link from our environment variables 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')

@@ -30,7 +30,7 @@ class UserSchema(ma.Schema):
         Regexp('^[a-zA-Z ]+$', error="Last names must contain only letters"))
 
     # Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
-    email = fields.String(required=True, validate=
+    email = fields.String(required=True, validate= 
         Regexp('^(?=\S{6,}$)\w+@\w+.\w+$', error="This does not look like a valid email address"))
 
     # Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
@@ -41,6 +41,4 @@ class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'email', 'password', 'is_admin')
         ordered = True
-
-
 
