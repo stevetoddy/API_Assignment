@@ -27,7 +27,7 @@ class BookSchema(ma.Schema):
     category = fields.Nested('CategorySchema', only=['id', 'name'])
     
     # Nesting multiple attributes from another table into return
-    comments = fields.List(fields.Nested('CommentSchema'))
+    comments = fields.List(fields.Nested('CommentSchema', only=['id', 'body', 'user']))
 
     # Validation 
     # Titles must have at least 1 character
