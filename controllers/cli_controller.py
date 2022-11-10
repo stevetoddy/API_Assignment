@@ -97,7 +97,6 @@ def seed_db():
         Book(
             title = 'The Name of the Wind',
             is_fiction = True,
-            is_kid_friendly = False,
             in_store = 0,
             author = authors[0],
             category = categories[0]
@@ -105,7 +104,6 @@ def seed_db():
         Book(
             title = 'The Wise Man\'s Fear',
             is_fiction = True,
-            is_kid_friendly = False,
             in_store = 2,
             author = authors[0],
             category = categories[0]
@@ -113,7 +111,6 @@ def seed_db():
         Book(
             title = 'The Way of Kings',
             is_fiction = True,
-            is_kid_friendly = False,
             in_store = 4,
             author = authors[1],
             category = categories[0]
@@ -121,7 +118,6 @@ def seed_db():
         Book(
             title = 'Catch 22',
             is_fiction = True,
-            is_kid_friendly = False,
             in_store = 2,
             author = authors[3],
             category = categories[3]
@@ -129,7 +125,6 @@ def seed_db():
         Book(
             title = 'Excession',
             is_fiction = True,
-            is_kid_friendly = False,
             in_store = 3,
             author = authors[4],
             category = categories[1]
@@ -137,7 +132,6 @@ def seed_db():
         Book(
             title = 'Cat in the Hat',
             is_fiction = True,
-            is_kid_friendly = True,
             in_store = 5,
             author = authors[2],
             category = categories[2]
@@ -145,7 +139,6 @@ def seed_db():
         Book(
             title = 'Automate the Boring Stuff with Python',
             is_fiction = False,
-            is_kid_friendly = True,
             in_store = 1,
             author = authors[5],
             category = categories[4]

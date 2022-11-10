@@ -24,7 +24,7 @@ def all_books():
 
 
 # Get one book by ID (requires authentication)
-@books_bp.route('/<int:id>', methods=['GET'])
+@books_bp.route('/<int:id>/', methods=['GET'])
 @jwt_required()
 def one_book(id):
 
@@ -44,7 +44,7 @@ def one_book(id):
 
 
 # Get all books by Author (requires authentication)
-@books_bp.route('/author/<int:author_id>', methods=['GET'])
+@books_bp.route('/author/<int:author_id>/', methods=['GET'])
 @jwt_required()
 def author_books(author_id):
     
@@ -57,7 +57,7 @@ def author_books(author_id):
 
 
 # Get all books by Category (requires authentication)
-@books_bp.route('/category/<int:category_id>', methods=['GET'])
+@books_bp.route('/category/<int:category_id>/', methods=['GET'])
 @jwt_required()
 def category_books(category_id):
     
@@ -70,7 +70,7 @@ def category_books(category_id):
 
 
 # Get all books classed as Fiction or Non Fiction (requires authentication)
-@books_bp.route('/fiction/<string:is_fiction>', methods=['GET'])
+@books_bp.route('/fiction/<string:is_fiction>/', methods=['GET'])
 @jwt_required()
 def fiction_books(is_fiction):
     
@@ -79,11 +79,11 @@ def fiction_books(is_fiction):
     book = db.session.scalars(stmt)
 
     # Respond to client with all books classed Fiction or Non Fiction
-    return BookSchema(many=True).dump(book)
+    return BookSchema(many=True, exclude=['is_fiction']).dump(book)
 
 
 # Get one book by Title  (requires authentication)
-@books_bp.route('/<string:title>', methods=['GET'])
+@books_bp.route('/<string:title>/', methods=['GET'])
 @jwt_required()
 def title_book(title):
 
@@ -110,25 +110,33 @@ def create_book():
     # Loading requests through schema for validation 
     data = BookSchema().load(request.json, partial=True)
 
-    book = Book(
-        title = data['title'],
-        is_fiction = data['is_fiction'],
-        is_kid_friendly  = data['is_kid_friendly'],
-        in_store = data['in_store'],
-        author = data['author'],
-        category = data['category']
-    )
+    # Query to find book by title
+    stmt = db.select(Book).filter_by(title=data['title'])
+    book = db.session.scalar(stmt)
 
-    # Add new book and commit to database
-    db.session.add(book)
-    db.session.commit()
+    # If no books are found under that title
+    if not book:
+        book = Book(
+            title = data['title'],
+            is_fiction = data['is_fiction'],
+            in_store = data['in_store'],
+            author_id = data['author_id'],
+            category_id = data['category_id']
+        )
 
-    # Respond to client with new book
-    return BookSchema().dump(book), 201
+        # Add new book and commit to database
+        db.session.add(book)
+        db.session.commit()
 
+        # Respond to client with new book excluding the comments, as there shouldn't be any comments yet
+        return BookSchema(exclude=['author_id', 'category_id', 'comments']).dump(book), 201
+
+    # If a matching title is found
+    else:
+        return {'error': f'Book with the that title already exists'}, 404
 
 # Create comments (requires authentication)
-@books_bp.route('<int:id>/comment/', methods=['POST'])
+@books_bp.route('/comment/<int:id>/', methods=['POST'])
 @jwt_required()
 def create_comment(id):
 
@@ -160,7 +168,7 @@ def create_comment(id):
 
 
 # Update a book by ID (need to be admin)
-@books_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
+@books_bp.route('/<int:id>/', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_one_book(id):
     # Checking if user has admin rights
@@ -189,7 +197,7 @@ def update_one_book(id):
         db.session.commit()
         
         # Respond to client with updated book
-        return BookSchema().dump(book)
+        return BookSchema(exclude=['author_id', 'category_id']).dump(book)
 
     # If not found
     else:
@@ -197,7 +205,7 @@ def update_one_book(id):
 
 
 # Delete a book by ID (need to be admin)
-@books_bp.route('/<int:id>', methods=['DELETE'])
+@books_bp.route('/<int:id>/', methods=['DELETE'])
 @jwt_required()
 def delete_one_book(id):
 
