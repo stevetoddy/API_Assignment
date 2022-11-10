@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from init import db
+from init import db, bc
 from models.user import User, UserSchema
 from flask_jwt_extended import jwt_required
 from controllers.auth_controller import authorise
@@ -98,7 +98,8 @@ def update_user(id):
     # If found, update with values sent
     if user:
         user.email = data.get('email') or user.email
-        user.password  = data.get('password') or user.password
+        if data.get('password'):
+            user.password = bc.generate_password_hash(data.get('password')).decode('utf8')
         user.first_name = data.get('first_name') or user.first_name
         user.last_name  = data.get('last_name') or user.last_name
         # Try block for Boolean values

@@ -565,18 +565,18 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ## */books*
 
 ### Description
-- Admin user can register a new admin user with their email, password, first name and last name. 
-- This endpoint will return the new users id, first name, last name, email and their admin status.  
-
+- Return a list of all the book entities in the database. 
+- This endpoint will return every book entity with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name, a nested attribute of the category with the category ID and category name. It will show if the book is fiction or not and the in store inventory number. Lastly, it will return a nested list of attributes of any comments made about the book, including the attributes comment ID, comment body, and a further nested attribute of the user that made the comment with the users ID, user first_name and user Last_name.  
+ 
 ### Authorisation and Authentication: 
  - Authentication required through JWT Bearer Token 
- - Authorisation as admin required through JWT Bearer Token
+ - Authorisation as admin not required
 
 ### METHOD
- - POST
+ - GET
 
 ### EXAMPLE
- - /auth/register/admin
+ - /books
 
 ### ARGUMENTS
  - None
@@ -587,31 +587,615 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ### OPTIONAL DATA
  - None
 
-### REQUEST BODY EXAMPLE 
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
 
 ```py
-{
-    "email" : "admin@test.com",
-    "password" : "12312312!Aa",
-    "first_name" : "Adam",
-    "last_name" : "Inn"
-}
+[
+    {
+        "id": 1,
+        "title": "The Name of the Wind",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "category": {
+            "id": 1,
+            "name": "Fantasy"
+        },
+        "is_fiction": true,
+        "in_store": 0,
+        "comments": [
+            {
+                "id": 1,
+                "body": "Name of the Wind is a fantastic take on the young hero trope",
+                "user": {
+                    "id": 2,
+                    "first_name": "Denna",
+                    "last_name": "Thomas"
+                }
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "The Wise Man's Fear",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "category": {
+            "id": 1,
+            "name": "Fantasy"
+        },
+        "is_fiction": true,
+        "in_store": 2,
+        "comments": [
+            {
+                "id": 2,
+                "body": "Book 2 of 3 in The Kingkiller Chronicles",
+                "user": {
+                    "id": 1,
+                    "first_name": "Steve",
+                    "last_name": "Todorovic"
+                }
+            }
+        ]
+    },
 ```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */books/\<int:id\>*
+
+### Description
+- Return a book entity using it's ID. 
+- This endpoint will return a book entity with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name, a nested attribute of the category with the category ID and category name. It will show if the book is fiction or not and the in store inventory number. Lastly, it will return a nested list of attributes of any comments made about the book, including the attributes comment ID, comment body, and a further nested attribute of the user that made the comment with the users ID, user first_name and user Last_name.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/1
+
+### ARGUMENTS
+ - Book ID (books.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
   
 ### RESPONSE BODY EXAMPLE 
 
 ```py
 {
-    "id": 7,
-    "first_name": "Adam",
-    "last_name": "Inn",
-    "email": "admin@test.com",
-    "is_admin": true
+    "id": 1,
+    "title": "The Name of the Wind",
+    "author": {
+        "id": 1,
+        "first_name": "Patrick",
+        "last_name": "Rothfuss"
+    },
+    "category": {
+        "id": 1,
+        "name": "Fantasy"
+    },
+    "is_fiction": true,
+    "in_store": 0,
+    "comments": [
+        {
+            "id": 1,
+            "body": "Name of the Wind is a fantastic take on the young hero trope",
+            "user": {
+                "id": 2,
+                "first_name": "Denna",
+                "last_name": "Thomas"
+            }
+        }
+    ]
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */books/\<string:name\>*
+
+### Description
+- Return a book entity using it's Title. 
+- This endpoint will return a book entity with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name, a nested attribute of the category with the category ID and category name. It will show if the book is fiction or not and the in store inventory number. Lastly, it will return a nested list of attributes of any comments made about the book, including the attributes comment ID, comment body, and a further nested attribute of the user that made the comment with the users ID, user first_name and user Last_name. 
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/The%20Name%20of%20the%20Wind
+
+### ARGUMENTS
+ - Book Title (books.title, String)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 1,
+    "title": "The Name of the Wind",
+    "author": {
+        "id": 1,
+        "first_name": "Patrick",
+        "last_name": "Rothfuss"
+    },
+    "category": {
+        "id": 1,
+        "name": "Fantasy"
+    },
+    "is_fiction": true,
+    "in_store": 0,
+    "comments": [
+        {
+            "id": 1,
+            "body": "Name of the Wind is a fantastic take on the young hero trope",
+            "user": {
+                "id": 2,
+                "first_name": "Denna",
+                "last_name": "Thomas"
+            }
+        }
+    ]
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */books/author/\<int:author.id\>*
+
+### Description
+- Return all book entities by an author using the author ID. 
+- This endpoint will return all book entities by a specific author with the book ID, title, a nested attribute of the category with the category id and the category name. It will show if the book is fiction or not and the in store inventory number.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/author/1
+
+### ARGUMENTS
+ - Author ID (author.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "title": "The Name of the Wind",
+        "category": {
+            "id": 1,
+            "name": "Fantasy"
+        },
+        "is_fiction": true,
+        "in_store": 0
+    },
+    {
+        "id": 2,
+        "title": "The Wise Man's Fear",
+        "category": {
+            "id": 1,
+            "name": "Fantasy"
+        },
+        "is_fiction": true,
+        "in_store": 2
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+## */books/category/\<int:category.id\>*
+
+### Description
+- Return all book entities by category using the category ID. 
+- This endpoint will return all book entities with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name. It will return if the book is fiction or not and the in store inventory number.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/category/1
+
+### ARGUMENTS
+ - Category ID (category.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "title": "The Name of the Wind",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 0
+    },
+    {
+        "id": 2,
+        "title": "The Wise Man's Fear",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 2
+    },
+    {
+        "id": 3,
+        "title": "The Way of Kings",
+        "author": {
+            "id": 2,
+            "first_name": "Brandon",
+            "last_name": "Sanderson"
+        },
+        "is_fiction": true,
+        "in_store": 4
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */books/fiction*
+
+### Description
+- Return all book entities classed as Fiction. 
+- This endpoint will return every book entity with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name, a nested attribute of the category with the category ID and category name. It will show if the book is fiction or not and the in store inventory number. Lastly, it will return a nested list of attributes of any comments made about the book, including the attributes comment ID, comment body, and a further nested attribute of the user that made the comment with the users ID, user first_name and user Last_name. 
+  
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/fiction
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "title": "The Name of the Wind",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 0
+    },
+    {
+        "id": 2,
+        "title": "The Wise Man's Fear",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 2
+    },
+    {
+        "id": 3,
+        "title": "The Way of Kings",
+        "author": {
+            "id": 2,
+            "first_name": "Brandon",
+            "last_name": "Sanderson"
+        },
+        "is_fiction": true,
+        "in_store": 4
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+---
+## */books/category/\<int:category.id\>*
+
+### Description
+- Return all book entities by category using the category ID. 
+- This endpoint will return all book entities with the book ID, title, a nested list of attributes of the author with the author ID, author first name and author last name. It will return if the book is fiction or not and the in store inventory number.
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token 
+ - Authorisation as admin not required
+
+### METHOD
+ - GET
+
+### EXAMPLE
+ - /books/category/1
+
+### ARGUMENTS
+ - Ctegory ID (category.id, Integer)
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+  
+### RESPONSE BODY EXAMPLE 
+
+```py
+[
+    {
+        "id": 1,
+        "title": "The Name of the Wind",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 0
+    },
+    {
+        "id": 2,
+        "title": "The Wise Man's Fear",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        },
+        "is_fiction": true,
+        "in_store": 2
+    },
+    {
+        "id": 3,
+        "title": "The Way of Kings",
+        "author": {
+            "id": 2,
+            "first_name": "Brandon",
+            "last_name": "Sanderson"
+        },
+        "is_fiction": true,
+        "in_store": 4
+    }
+]
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+
+## */books*
+
+### Description
+- Create a new category entity in the database. 
+- This endpoint will return the new category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST
+
+### EXAMPLE
+ - /categories
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - Category Name (category.name, String)
+ - Description (category.description, String)
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+
+```py
+{
+    "name": "Test Categpry",
+    "description": "Test category description"
+}
+```
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 6,
+    "name": "Test Categpry",
+    "description": "Test category description"
 }
 ```
 
 ### RETURN STATUS
 - 201 CREATED
+
+---
+
+## */categories\<int:id\>*
+
+### Description
+- Update a category entity in the database using it's ID. 
+- This endpoint will return the updated category entity including the category id, the category name, and a description of the category.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - POST, PATCH
+
+### EXAMPLE
+ - /categories/6
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+- None
+
+### OPTIONAL DATA
+ - Category Name (category.name, String)
+ - Description (category.description, String)
+
+### REQUEST BODY EXAMPLE
+
+```py
+{
+    "name": "Another name",
+    "description": "Another description"
+}
+```
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "id": 6,
+    "name": "Another name",
+    "description": "Another description"
+}
+```
+
+### RETURN STATUS
+- 200 OK
+
+---
+
+## */categories\<int:id\>*
+
+### Description
+- Delete a category entity in the database using it's ID. 
+- This endpoint will return a response message informing the client of a successful deletion.  
+
+### Authorisation and Authentication: 
+ - Authentication required through JWT Bearer Token
+ - Authorisation as admin required through JWT Bearer Token
+
+### METHOD
+ - DELETE
+
+### EXAMPLE
+ - /categories/6
+
+### ARGUMENTS
+ - None
+  
+### REQUIRED DATA
+ - None
+
+### OPTIONAL DATA
+ - None
+
+### REQUEST BODY EXAMPLE
+ - None
+
+### RESPONSE BODY EXAMPLE 
+
+```py
+{
+    "message": "Category 'Another name' deleted successfully"
+}
+```
+
+### RETURN STATUS
+- 200 OK
 
 ---
 

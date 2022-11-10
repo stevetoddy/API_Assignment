@@ -9,7 +9,6 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     is_fiction = db.Column(db.Boolean)
-    is_kid_friendly = db.Column(db.Boolean)
     in_store = db.Column(db.Integer)
     # Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
@@ -26,7 +25,7 @@ class BookSchema(ma.Schema):
     author = fields.Nested('AuthorSchema', only=['id', 'first_name', 'last_name'])
     category = fields.Nested('CategorySchema', only=['id', 'name'])
     
-    # Nesting multiple attributes from another table into return
+    # Nesting multiple attributes from linked table into return
     comments = fields.List(fields.Nested('CommentSchema', only=['id', 'body', 'user']))
 
     # Validation 
@@ -35,7 +34,7 @@ class BookSchema(ma.Schema):
         Length(min=1, error="Title must be at least 1 character long"))
 
     class Meta:
-        fields = ('id', 'title', 'author', 'category', 'comments', 'is_fiction', 'is_kid_friendly', 'in_store')
+        fields = ('id', 'title', 'author_id', 'author', 'category_id', 'category', 'is_fiction', 'in_store', 'comments')
         ordered = True
 
 

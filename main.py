@@ -27,18 +27,17 @@ def create_app():
     def validation_err(err):
         return {"error": err.messages}, 400
     
-    # @app.errorhandler(TypeError)
-    # def type_err(err):
-    #     abort(400)
+    @app.errorhandler(TypeError)
+    def type_err(err):
+        return {"error": str(err)}, 400
 
-    # @app.errorhandler(ValueError)
-    # def value_err(err):
-    #     abort(400)
+    @app.errorhandler(ValueError)
+    def value_err(err):
+        return {"error": str(err)}, 400
     
     @app.errorhandler(StatementError)
     def statement_err(err):
         return {"error": "Make sure all values are valid and of the correct type"}, 400
-
 
     @app.errorhandler(400)
     def bad_request(err):

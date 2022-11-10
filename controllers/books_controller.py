@@ -20,7 +20,7 @@ def all_books():
     books = db.session.scalars(stmt)
 
     # Respond to client with all books 
-    return BookSchema(many=True).dump(books)
+    return BookSchema(many=True, exclude=['author_id', 'category_id']).dump(books)
 
 
 # Get one book by ID (requires authentication)
@@ -36,7 +36,7 @@ def one_book(id):
     if book:
 
         # Respond to client with book
-        return BookSchema().dump(book)
+        return BookSchema(exclude=['author_id', 'category_id']).dump(book)
     
     # If not found
     else:
@@ -52,16 +52,9 @@ def author_books(author_id):
     stmt = db.select(Book).filter_by(author_id=author_id)
     book = db.session.scalars(stmt)
 
-    # If found
-    if book:
-        
-        # Respond to client with book excluding linked comments 
-        return BookSchema(many=True, exclude=['comments']).dump(book)
-    
-    # If not found
-    else:
-        return {'error': f'No author with id {author_id}'}, 404
-        
+    # Respond to client with all books by author excluding linked comments and author
+    return BookSchema(many=True, exclude=['author_id', 'author', 'category_id', 'comments']).dump(book)
+
 
 # Get all books by Category (requires authentication)
 @books_bp.route('/category/<int:category_id>', methods=['GET'])
@@ -71,16 +64,22 @@ def category_books(category_id):
     # Query to find book by Category ID
     stmt = db.select(Book).filter_by(category_id=category_id)
     book = db.session.scalars(stmt)
+
+    # Respond to client with books excluding linked comments and category
+    return BookSchema(many=True, exclude=['author_id', 'category_id', 'category', 'comments']).dump(book)
+
+
+# Get all books classed as Fiction or Non Fiction (requires authentication)
+@books_bp.route('/fiction/<string:is_fiction>', methods=['GET'])
+@jwt_required()
+def fiction_books(is_fiction):
     
-    # If found
-    if book:
-        
-        # Respond to client with book excluding linked comments
-        return BookSchema(many=True, exclude=['comments']).dump(book)
-    
-    # If not found
-    else:
-        return {'error': f'No category with id {category_id}'}, 404
+    # Query to find books classed Fiction or Non Fiction
+    stmt = db.select(Book).filter_by(is_fiction=is_fiction)
+    book = db.session.scalars(stmt)
+
+    # Respond to client with all books classed Fiction or Non Fiction
+    return BookSchema(many=True).dump(book)
 
 
 # Get one book by Title  (requires authentication)
@@ -96,7 +95,7 @@ def title_book(title):
     if book:
         
         # Respond to client with book
-        return BookSchema().dump(book)
+        return BookSchema(exclude=['author_id', 'category_id']).dump(book)
     
     # If not found
     else:
@@ -182,13 +181,9 @@ def update_one_book(id):
             book.is_fiction = data['is_fiction'] 
         except:
             book.is_fiction = book.is_fiction
-        # Try block for Boolean values
-        try:
-            book.is_kid_friendly  = data['is_kid_friendly']
-        except:
-            book.is_kid_friendly = book.is_kid_friendly
-
         book.in_store = data.get('in_store') or book.in_store
+        book.author_id = data.get('author_id') or book.author_id
+        book.category_id = data.get('category_id') or book.category_id
         
         # Commit changes to database
         db.session.commit()
@@ -221,8 +216,8 @@ def delete_one_book(id):
         db.session.commit()
 
         # Respond to client
-        
         return {'message': f"Book '{book.title}' deleted successfully"}
+    
     #If not found
     else:
         return {'error': f'No book with id {id}'}, 404
