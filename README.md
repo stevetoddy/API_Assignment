@@ -1,5 +1,7 @@
 # Book Store API Web Application Project
 
+## This project's Github Repo can be found [here](https://github.com/stevetoddy/API_Assignment)
+
 ## Index  
 - [R1 - Identification of the problem you are trying to solve by building this particular app](#r1---identification-of-the-problem-you-are-trying-to-solve-by-building-this-particular-app)  
 - [R2 - Why is it a problem that needs solving](#r2-–-why-is-it-a-problem-that-needs-solving)  
@@ -653,7 +655,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */books/\<int:id\>*
+## */books/\<int:books.id\>*
 
 ### Description
 - Return a book entity using it's ID. 
@@ -717,7 +719,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */books/\<string:name\>*
+## */books/\<string:books.name\>*
 
 ### Description
 - Return a book entity using it's Title. 
@@ -913,7 +915,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */books/fiction/\<string:is_fiction\>*
+## */books/fiction/\<string:books.is_fiction\>*
 
 ### Description
 - Return all book entities classed as Fiction or Non Fiction depending on aurgument sent. 
@@ -934,7 +936,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - /books/fiction/0
 
 ### ARGUMENTS
- - Is Fiction: True (1) or False (0) (books.is_fiction, Boolean)
+ - Is Fiction: True (1) or False (0) (books.is_fiction, Boolean Value sent as a String )
   
 ### REQUIRED DATA
  - None
@@ -1175,7 +1177,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */books\<int:id\>*
+## */books\<int:books.id\>*
 
 ### Description
 - Delete a book entity in the database using it's ID. 
@@ -2076,7 +2078,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ## R6 - Make an ERD for the app
 This is my ERD for my Book Store application.  
-![Book_Store_ERD](Images/book_store_ERD4.png)
+![Book Store ERD](Images/book_store_ERD_final.png)
 
 ## R9 - Discuss the database relations to be implemented in your application
 
