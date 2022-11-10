@@ -1052,7 +1052,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Authorisation as admin required through JWT Bearer Token
 
 ### METHOD
- - POST
+ - POST, PATCH
 
 ### EXAMPLE
  - /books/4
@@ -1123,30 +1123,28 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### Authorisation and Authentication: 
  - Authentication required through JWT Bearer Token
- - Authorisation as admin required through JWT Bearer Token
-
+ - Authorisation as admin not required
+  
 ### METHOD
- - POST, PATCH
+ - POST
 
 ### EXAMPLE
- - /categories/6
+ - /books/comment/2
 
 ### ARGUMENTS
- - None
+ - Book ID (books.id, Integer)
   
 ### REQUIRED DATA
-- None
+ - Comment Body (comment.body, Text)
 
 ### OPTIONAL DATA
- - Category Name (category.name, String)
- - Description (category.description, String)
+ - None
 
 ### REQUEST BODY EXAMPLE
 
 ```py
 {
-    "name": "Another name",
-    "description": "Another description"
+    "body": "Another Comment about book 2"
 }
 ```
 
@@ -1154,21 +1152,33 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ```py
 {
-    "id": 6,
-    "name": "Another name",
-    "description": "Another description"
+    "id": 10,
+    "body": "Another Comment about book 2",
+    "book": {
+        "title": "The Wise Man's Fear",
+        "author": {
+            "id": 1,
+            "first_name": "Patrick",
+            "last_name": "Rothfuss"
+        }
+    },
+    "user": {
+        "id": 1,
+        "first_name": "Steve",
+        "last_name": "Todorovic"
+    }
 }
 ```
 
 ### RETURN STATUS
-- 200 OK
+- 201 CREATED
 
 ---
 
-## */categories\<int:id\>*
+## */books\<int:id\>*
 
 ### Description
-- Delete a category entity in the database using it's ID. 
+- Delete a book entity in the database using it's ID. 
 - This endpoint will return a response message informing the client of a successful deletion.  
 
 ### Authorisation and Authentication: 
@@ -1179,10 +1189,10 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - DELETE
 
 ### EXAMPLE
- - /categories/6
+ - /book/2
 
 ### ARGUMENTS
- - None
+ - Book ID (book.id, Integer)
   
 ### REQUIRED DATA
  - None
@@ -1197,7 +1207,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ```py
 {
-    "message": "Category 'Another name' deleted successfully"
+    "message": "Book 'The Wise Man's Fear' deleted successfully"
 }
 ```
 
@@ -1766,7 +1776,9 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 - 200 OK
 
 --- 
-## Create comments endpoint found [here]() in Books endpoints
+
+## For **creating a new comment**, the endpoint can be found [here](#bookscommentintbookid) in the Books documentation
+
 
 ---
 
