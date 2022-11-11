@@ -2,7 +2,9 @@ from flask import Blueprint, request
 from init import db
 from models.comment import Comment, CommentSchema
 from flask_jwt_extended import jwt_required
-# COmments Controller Blueprint
+
+
+# Comments Controller Blueprint
 comments_bp = Blueprint('comments', __name__, url_prefix='/comments')
 
 
