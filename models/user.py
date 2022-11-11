@@ -8,7 +8,6 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50))
     is_admin = db.Column(db.Boolean, default=False)
@@ -21,11 +20,11 @@ class User(db.Model):
 # Marshmallow schemas 
 class UserSchema(ma.Schema):
     # Validation 
-    # First name address must have at least 1 character and contain only letters
+    # First name must have at least 1 character and contain only letters
     first_name = fields.String(required=True, validate=
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 
 
-    # Last name address must contain only letters
+    # Last name must contain only letters
     last_name = fields.String(validate= 
         Regexp('^[a-zA-Z ]+$', error="Last names must contain only letters"))
 

@@ -22,7 +22,7 @@ class Comment(db.Model):
 class CommentSchema(ma.Schema):
     # Nesting attributes from other tables into return
     user = fields.Nested('UserSchema', only=['id', 'first_name', 'last_name'])
-    book = fields.Nested('BookSchema', only=['title', 'author'])
+    book = fields.Nested('BookSchema', only=['id', 'title', 'author'])
     
     # Validation 
     # Comment body name must be longer than 1 character

@@ -22,7 +22,7 @@ def all_categories():
 
 
 # Get one category by ID (requires authentication)
-@categories_bp.route('/<int:id>', methods=['GET'])
+@categories_bp.route('/<int:id>/', methods=['GET'])
 @jwt_required()
 def one_category(id):
 
@@ -85,7 +85,7 @@ def create_category():
 
 
 # Update a category by ID (need to be admin)
-@categories_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
+@categories_bp.route('/<int:id>/', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_category(id):
     # Checking if user has admin rights
@@ -115,7 +115,7 @@ def update_category(id):
 
 
 # Delete a category by ID (need to be admin)
-@categories_bp.route('/<int:id>', methods=['DELETE'])
+@categories_bp.route('/<int:id>/', methods=['DELETE'])
 @jwt_required()
 def delete_category(id):
     # Checking if user has admin rights

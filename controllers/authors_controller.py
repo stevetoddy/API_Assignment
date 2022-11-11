@@ -94,8 +94,8 @@ def create_author():
     author = Author(
         first_name = data['first_name'],
         last_name = data['last_name'],
-        accolades = data['accolades'],
-        about = data['about']
+        accolades = data.get('accolades'),
+        about = data.get('about')
     )
 
     # Add and commit author to database

@@ -11,7 +11,7 @@ class Category(db.Model):
     description = db.Column(db.Text, nullable=False) 
     
     # Foreign Key Relationship
-    books = db.relationship('Book', back_populates='category')
+    books = db.relationship('Book', back_populates='category', cascade='all, delete')
 
 # Marshmallow schemas 
 class CategorySchema(ma.Schema):

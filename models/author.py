@@ -26,15 +26,15 @@ class AuthorSchema(ma.Schema):
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 
 
     # Last name must have at least 1 character and contain only letters
-    last_name = fields.String(validate= 
+    last_name = fields.String(required=True, validate= 
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="Last names must be at least 1 character long and contain only letters"))
 
     # Category description must be longer than 1 character
-    about = fields.String(required=True, validate=
+    about = fields.String(validate=
         Length(min=2, error="Author about must be longer than 1 character"))
     
     # Category description must be longer than 1 character
-    accolades = fields.String(required=True, validate=
+    accolades = fields.String(validate=
         Length(min=2, error="Author accolades must be longer than 1 character"))
     
     class Meta:

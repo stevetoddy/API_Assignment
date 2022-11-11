@@ -37,7 +37,7 @@ def create_app():
     
     @app.errorhandler(StatementError)
     def statement_err(err):
-        return {"error": "Make sure all values are valid and of the correct type"}, 400
+        return {"error": "Statement Error, value used is not of the correct type or the related entity doesn't exist"}, 400
 
     @app.errorhandler(400)
     def bad_request(err):

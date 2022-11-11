@@ -2075,10 +2075,212 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-
 ## R6 - Make an ERD for the app
 This is my ERD for my Book Store application.  
 ![Book Store ERD](Images/book_store_ERD_final.png)
+
+---
+
+## R8 - Describe the projects MODELS in terms of the relationship they have with each other
+
+To avoid repetition, I will address a few aspects of the models and schemas that apply to all models and schemas within this project. 
+All models used in this project will have a preferred name given to tables created by the Models, given to the tables using ‘\_\_tablename__’ to overwrite the default table name that copies the class name. 
+Model relationships allow entities to pull information from the tables created from the linked Models, at the same time as synchronising the state changes between the linked entities. 
+
+Across all Schemas in this project, the ordering option used ‘ordered=True’ will only work if the Flask option ‘JSON_SORT_KEYS’  is made ‘False’ in the ‘app.config’ file, otherwise this will take precedence.
+
+The Schema are used for return formatting and input validation. The main entity return options are made under the class Meta option ‘fields’, where which attributes are to be returned and in what order is specified. Some schemas will have links to external tables schemas to give nested attributes from those tables a schema to follow when being returned with the parent entity. 
+
+All Schemas are also used to pass input data through for validation, and if validation is not passed, it will raise an error message with information indicating what must be fulfilled to pass the validation.                                                                   
+
+## Author Model
+
+### Attributes  
+
+- id (Integer, Primary Key)
+- first_name (String(50), NOT NULLABLE)
+- last_name (String(50), NOT NULLABLE)
+- accolades (Text)
+- about (Text)
+
+### Relationships
+
+- books - Allowing attributes from the linked Book Model to be used within Author entities. This books relationship has cascade delete linked to the Author entity, so if an Author entity is deleted, all the books associated will also be deleted. 
+
+
+## Author Schemas 
+
+### Return Order of Attributes
+
+- id 
+- first_name 
+- last_name 
+- about 
+- accolades
+- books
+--- book.title 
+--- book.in_store
+--- book.id
+
+### Linked Schemas 
+
+- books - a nested schema used to list only the attributes needed from a related tables attributes: book title, book inventory number and book id. 
+
+### Schema Validation  
+
+- The ‘first_name’ validation states it is a required field and must have at least 1 character and contain only letters.
+- The ‘last_name’ validation states it must have at least 1 character and contain only letters.
+- The ‘about’ validation states it must have at least 2 characters. 
+- The ‘accolades’ validation states it must have at least 2 characters.
+
+## Book Model
+
+### Attributes
+
+- id (Integer, Primary Key)
+- title (String(200), NOT NULLABLE)
+- is_fiction (Boolean)
+- in_store (Integer)
+
+### Foreign Keys
+
+- author_id (Integer, Foreign Key, NOT NULLABLE) – Linked to the Author Model using the author id attribute given to author entities.
+- category_id (Integer, Foreign Key, NOT NULLABLE) – Linked to the Category Model using the category id attribute given to category entities.
+
+### Relationships
+
+- author – Allowing attributes from the linked Author Model to be used within Book entities.
+- category – Allowing attributes from the linked Category Model to be used within Book entities.
+- comments – Allowing attributes from the linked Comment Model to be used within Book entities. This comments relationship has cascade delete linked to the Book entity, so if a Book entity is deleted, all the comments associated will also be deleted.
+
+### Return Order of Attributes
+
+- id
+- title
+- author_id (excluded in most returns though ‘exclude’ parameter directly on returns)
+- author
+--- author.id
+--- author.first_name
+--- author.last_name
+- category_id (excluded in most returns though ‘exclude’ parameter directly on returns)
+- category
+--- category.id
+--- category.name
+- is_fiction
+- in_store
+- comments
+--- comment.id
+--- comment.body
+--- comment.user
+
+### Linked Schemas 
+
+- author - a nested schema used to list only the attributes needed from a related tables attributes: author id, author first name, author last name 
+- category - a nested schema used to list only the attributes needed from a related tables attributes: category id, category name.
+- comments - a nested schema used to list only the attributes needed from a list of related tables attributes: comment id, comment body, comment user. 
+
+### Schema Validation  
+
+- The ‘title’ validation states it is a required field and must have at least 1 character.
+
+
+## Category Model
+
+### Attributes  
+
+- id (Integer, Primary Key)
+- name (String(100), NOT NULLABLE)
+- description (Text, NOT NULLABLE)
+
+### Relationships
+
+- books – Allowing attributes from the linked Book Model to be used within Category entities. This books relationship has cascade delete linked to the Category entity, so if a Category entity is deleted, all the books associated will also be deleted.
+
+### Return Order of Attributes
+
+- id
+- name
+- description
+
+### Schema Validation  
+
+- The ‘name’ validation states it is a required field and must have at least 2 character.
+- The ‘description’ validation states it is a required field and must have at least 2 character.
+
+## Comment Model
+
+### Attributes 
+
+- id (Integer, Primary Key)
+- body (Text)
+
+### Foreign Keys
+
+- user_id (Integer, Foreign Key, NOT NULLABLE) – Linked to the User Model using the user id attribute given to user entities.
+- book_id (Integer, Foreign Key, NOT NULLABLE) – Linked to the Book Model using the book id attribute given to book entities.
+
+### Relationships
+
+- user – Allowing attributes from the linked User Model to be used within Comment entities.
+- book – Allowing attributes from the linked Book Model to be used within Comment entities.
+
+### Return Order of Attributes
+
+- id
+- body
+- book
+--- book.id
+--- book.title
+--- book.author (A nested list itself, order of return shown on Book Model)
+- user
+--- user.id
+--- user.first_name
+--- user.last_name
+
+### Linked Schemas 
+
+- book - a nested schema used to list only the attributes needed from a related tables attributes: book id, book title, book author (A nested list itself, attributes returned shown in Book Model) 
+- user - a nested schema used to list only the attributes needed from a related tables attributes: user id, user first name, user last name
+- comments - a nested schema used to list only the attributes needed from a list of related tables attributes: comment id, comment body, comment user. 
+
+### Schema Validation  
+
+- The ‘body’ validation states it is a required field and must have at least 2 character.
+
+## User Model
+
+### Attributes  
+
+- id (Integer, Primary Key)
+- first_name (String(50), NOT NULLABLE)
+- last_name (String(50), NOT NULLABLE)
+- is_admin (Boolean, default=False)
+- email (String, NOT NULLABLE, unique=True)
+- password (String, NOT NULLABLE)
+
+### Relationships
+
+- comments – Allowing attributes from the linked Comment Model to be used within User entities. 
+
+### Return Order of Attributes
+
+- id
+- first_name
+- last_name
+- email
+- password (excluded on most returns for security)
+- is_admin
+
+### Schema Validation  
+
+- The ‘first_name’ validation states it is a required field and must have at least 1 character and contain only letters.
+
+- The ‘last_name’ validation states it must contain only letters.
+
+- The ‘email’ validation states it is a required field and must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com.
+
+- The ‘password’ validation states it is a required field and must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character.
+
 
 ## R9 - Discuss the database relations to be implemented in your application
 
