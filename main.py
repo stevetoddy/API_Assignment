@@ -1,4 +1,4 @@
-from flask import Flask, abort
+from flask import Flask
 from init import db, ma, bc, jwt
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import StatementError
@@ -38,6 +38,10 @@ def create_app():
     @app.errorhandler(StatementError)
     def statement_err(err):
         return {"error": "Statement Error, value used is not of the correct type or the related entity doesn't exist"}, 400
+   
+    @app.errorhandler(AttributeError)
+    def attribute_err(err):
+        return {"error": str(err)}, 401
 
     @app.errorhandler(400)
     def bad_request(err):

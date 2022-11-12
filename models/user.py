@@ -14,7 +14,7 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False) 
     # Foreign Key Relationship
-    comments = db.relationship('Comment', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
     
 
 # Marshmallow schemas 
@@ -24,9 +24,9 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True, validate=
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="First names must be at least 1 character long and contain only letters")) 
 
-    # Last name must contain only letters
+    # Last name must have at least 1 character and contain only letters
     last_name = fields.String(validate= 
-        Regexp('^[a-zA-Z ]+$', error="Last names must contain only letters"))
+        Regexp('^[a-zA-Z ]+$', error="Last names must be at least 1 character long and contain only letters"))
 
     # Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
     email = fields.String(required=True, validate= 
@@ -41,3 +41,6 @@ class UserSchema(ma.Schema):
         fields = ('id', 'first_name', 'last_name', 'email', 'password', 'is_admin')
         ordered = True
 
+
+
+# Is Admin only accepts boolean values, True (true, 1) or False (false, 0)

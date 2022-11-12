@@ -22,7 +22,7 @@ def all_users():
 
 
 # Get one user by ID (requires authentication)
-@users_bp.route('/<int:id>', methods=['GET'])
+@users_bp.route('/<int:id>/', methods=['GET'])
 @jwt_required()
 def one_user(id):
 
@@ -82,7 +82,7 @@ def user_last_name(name):
 
 
 # Update a User by ID (need admin rights)
-@users_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
+@users_bp.route('/<int:id>/', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_user(id):
     # Checking if user has admin rights
@@ -120,7 +120,7 @@ def update_user(id):
 
 
 # Delete a user by ID (need to be admin)
-@users_bp.route('/<int:id>', methods=['DELETE'])
+@users_bp.route('/<int:id>/', methods=['DELETE'])
 @jwt_required()
 def delete_user(id):
     # Checking if user has admin rights

@@ -29,11 +29,11 @@ class AuthorSchema(ma.Schema):
     last_name = fields.String(required=True, validate= 
         Regexp('^(?=\S{1,}$)[a-zA-Z ]+$', error="Last names must be at least 1 character long and contain only letters"))
 
-    # Category description must be longer than 1 character
+    # Author about must be longer than 1 character
     about = fields.String(validate=
         Length(min=2, error="Author about must be longer than 1 character"))
     
-    # Category description must be longer than 1 character
+    # Author accolades must be longer than 1 character
     accolades = fields.String(validate=
         Length(min=2, error="Author accolades must be longer than 1 character"))
     

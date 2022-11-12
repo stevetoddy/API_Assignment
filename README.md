@@ -22,7 +22,9 @@
 
 ## R1 - Identification of the problem you are trying to solve by building this particular app.
 
-A book store requires a inventory system that will allow employees to easily find books within the stores inventory, using several methods to find the correct book for a customer. The employees will be able to search for a books availability by simply searching for it’s title, but they will also be able to look up any available books by using other criteria such as author or style (crime, fantasy, romance, etc..). Having these extra search methods will allow employees to suggest appropriate books to customers based on their interests. An internal review system, by way of comments assigned to books, will allow employees to gain a quick understanding of a book so they can explain a title to a customer, without having read the book, as it would be nearly impossible to read all of the books in the store. The internal review system is based off similar systems like tasting notes in a wine store or product reviews in an appliance store. The inventory system will assign employees logins and passwords that will have certain privileges associated, such as creating a new book entry, and adding new reviews. Managers will get administrator credentials that will give them more extensive privileges such as deleting book entries and reviews, as well as altering the inventory numbers, along with the same privileges that the employees have. All inventory users will be able to use all the search functions. 
+Book stores have enormous, varied and individual inventories. Each book is unique and only a true knowledge of the titles will give you an understanding that would be helpful in customer interactions. This along with the sheer amount of titles even the smallest books stores carry, an concise and informative inventory system is paramount to a smooth operation.  
+A book store requires a inventory system that will allow employees to easily find books within the stores inventory, using several methods to find the correct book for a customer. The employees will be able to search for a books availability by simply searching for it’s title, but they will also be able to look up any available books by using other criteria such as author or category (crime, fantasy, romance, etc..). Having these extra search methods will allow employees to suggest appropriate books to customers based on their interests.  
+An internal review system, by way of comments assigned to books, will allow employees to gain a quick understanding of a book so they can explain a title to a customer, without having read the book, as it would be nearly impossible to read all of the books in the store. The internal review system is based off similar systems like tasting notes in a wine store or product reviews in an appliance store. The inventory system will assign employees logins and passwords that will have certain privileges associated, such as creating a new book entry, and adding new reviews. Managers will get administrator credentials that will give them more extensive privileges such as deleting book entries and reviews, as well as altering the inventory numbers, along with the same privileges that the employees have. All inventory users will be able to use all the search functions. 
 
 ## R2 – Why is it a problem that needs solving?
 
@@ -32,21 +34,21 @@ An API may seem like overkill for a book store's internal inventory system, but 
 
 ## R3 -  Why have you chosen this database system. What are the drawbacks compared to others?
 
-I have chosen to use PostgreSQL as my database system for several reason which I will go into. To begin with, PostgreSQL an advanced, fully open sourced SQL database system, unlike Oracle, SQL Server and even MySQL which have fee which can get very expensive. Though MySQL is still technically an open sourced database system, they were partially bought by Oracle and since then certain features and services have been hidden away behind a paywall. MySQL it is still a very capable database system in it’s free, open sourced version, it is not quite as ‘free’ as PostgreSQL depending on your circumstance. Oracle can get very expensive if you decide to really scale up, as Amazon found out when they started to grow into one of the worlds largest companies. The cost had become so high that Amazon eventually switched their systems over to PostgreSQL. Some other tech giants that utilise PostgreSQL are Apple and Cisco, and I can imagine the cost might have a big part to play in their decisions. 
+I have chosen to use PostgreSQL as my database system for several reasons. To begin with, PostgreSQL is an advanced, fully open sourced SQL database system, and unlike Oracle, SQL Server and even MySQL, does not have fees, which can get very expensive very quickly. Though MySQL is still technically an open sourced database system, they were partially bought by Oracle and since then certain features and services have been hidden away behind 'soft' paywalls. MySQL is still a very capable database system in it’s free, open sourced version, although it is still not quite as ‘free’ as PostgreSQL, depending on your project circumstances and needs. Oracle can get very expensive if you decide to really scale up, as Amazon found out when they started to grow into one of the worlds largest companies. The cost had become so high that Amazon eventually switched their systems over to PostgreSQL. Some other tech giants that utilise PostgreSQL are Apple and Cisco, and I can imagine the cost might have a big part to play in their decisions. 
 
 PostgreSQL will work on pretty much any machine or operating system, while systems like SQL Server will only run on Microsoft or Linux software. PostgreSQL mainly relies on it’s community for support as it is an open source software system, but this is not an issue as it has been around for over 20 years and the community is very large and active. PostgreSQL scales easily and is highly customisable as it has access to a near endless amount of plugin libraries, such as psycopg2 for python, which we will be using for our web application. 
 
-From a more technical view, PostgreSQL uses Multiversion Concurrency Control (MVCC) which allows parallelisation so your queries can use multiple cores on the machine that is hosting your database, increasing power and speeding up query time. MySQL as PostgreSQL’s main open source competitor does not have this. PostgreSQL is able to use almost any data type and any index which gives it a huge amount of flexibility. Postgresql is more SQL complainant than MySQL, so in a strange turn of events if you ever wanted to take your project into a closed source environment like Oracle, PostgreSQL would make the transition better than MySQL, which is partially owned by Oracle. Lastly, PostgreSQL is very popular for web applications exactly like what we intend to make in this project, so it is perfect for us. 
+From a more technical view, PostgreSQL uses Multiversion Concurrency Control (MVCC) which allows parallelisation so your queries can use multiple cores on the machine that is hosting your database, increasing power and speeding up query time. MySQL, as PostgreSQL’s main open source competitor, does not have this. PostgreSQL is able to use almost any data type and any index which gives it a huge amount of flexibility. Postgresql is more SQL complainant than MySQL, so in a strange turn of events if you ever wanted to take your project into a closed source environment like Oracle, PostgreSQL would make the transition better than MySQL, which is partially owned by Oracle. Lastly, PostgreSQL is very popular for web applications exactly like what we intend to make in this project, so there is a lot of documentation and community discussion directed at situations similar to those we will be facing with this project.
 
 ## R4 - Identify and discuss the key functionalities and benefits of an ORM
 
-An ORM (Object Relational Mapping) tool is used to map relational databases to objects in you preferred object-oriented programming language. There are many ORMs for many programming languages but the core functionalities are all basically the same. The main function of an ORM is that it abstracts SQL into objects of the language you are working in. This allows us to use objects from a certain language instead of needing to rely on direct SQL query statements. An ORM will all so parse the results that are returned from the query and give them back to us. This helps to improves readability, as direct SQL can be very dense and hard to decipher. This can also help reduce errors and speeds up production as it reduces the amount of code you have to work with. This will usually mean decreased costs associated with the development of an application. 
+An ORM (Object Relational Mapping) tool is used to map relational databases to objects in your preferred object-oriented programming language. There are many ORMs for many programming languages, but the core functionalities are all basically the same. The main function of an ORM is that it abstracts SQL into objects of the language you are working in. This allows us to use objects from a certain language instead of needing to rely on direct SQL query statements. An ORM will all so parse the results that are returned from the query and give them back to us, usually in objects of the language we are using, or in easy to read returns. This helps to improves readability, as direct SQL can be very dense and hard to decipher. This can also help reduce errors and speeds up production as it reduces the amount of code you have to work with. This can mean a decreas in costs associated with the development of an application.  
 
-ORMs can make accessing data much easier. They map out how certain objects will relate to different tables within your database, then use these relationships to create SQL queries such as the basic CRUD operations, Create (or Insert), Read, Update and Delete. These terms may differ between languages and databases, but they all perform the same basic tasks needed to use your database. Of course an ORM tool will allow for much, much more complex SQL queries, but will still keep them fairly concise and readable for the development team. 
+ORMs can make accessing data much easier. They map out how certain objects will relate to different tables within your database, then use these relationships to create SQL queries, such as the basic CRUD operations, Create (or Insert), Read, Update and Delete. These terms may differ between languages and databases, but they all perform the same basic tasks needed to use your database. Of course an ORM tool will allow for much, much more complex SQL queries, but will still keep them fairly concise and readable for the development team.  
 
-Another very important and welcome feature of an ORM is that it increases your databases security, reducing the possibility of SQL injection threats. This is because of the layer of abstraction an ORM gives a database, forcing outside queries through the ORM before it can make it to the database itself. Of course, this is not perfect and ORM injection can happen. 
+Another very important and welcome feature of an ORM is that it increases your databases security, reducing the possibility of SQL injection threats. This is because of the layer of abstraction an ORM gives a database, forcing outside queries through the ORM, which can be layered with validation and sanitation protocols, before it can make it to the database itself. Of course, this is not perfect and ORM injection can happen if the ORM itself has exploitable weaknesses.  
 
-Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point. Many ORMs offer this feature though, but not all.  
+Some issues with ORMs are that it can slow down the execution of queries compared to using SQL directly, as the ORM will usually produce a lot of it’s own code along side the minimum SQL needed. Another issue is ORMs themselves must be learned and implemented, which can be difficult and time consuming. The latter argument is usually overshadowed by the overall increase in productivity once an ORM is learned and implemented, and the former will depend on the projects needs and there are cases where this will be negligible or even non existent. Finally, a last issue that can effect a project is an ORM can be limiting, and you may need to resort to using direct SQL at some point, which can be frustrating if you have spent money and time implementing an ORM.
 
 ---
 
@@ -62,7 +64,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### Description
 - Login with email and password to recieve a bearer token with a 24 hour expiry time
-- This end point will return the comment body and comment ID, and nested attributes from the book (title), including nested attributes from the book's author (first name and last name), and user associated with the comment (Id, first name and last name)
+- This end point will return the users email bearer token and their admin indicator.
 
 ### Authorisation and Authentication: 
  - Authentication not needed 
@@ -80,7 +82,9 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### REQUIRED DATA
  - Email address - (user.email, String)
+ - - Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
  - Password - (user.password, String)
+ - - Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
 
 ### OPTIONAL DATA
  - None
@@ -130,12 +134,17 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ### REQUIRED DATA
  - First name (user.first_name, String)
+ - - First name must have at least 1 character and contain only letters
  - Email address - (user.email, String)
+ - - Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
  - Password - (user.password, String)
+ - - Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
 
 ### OPTIONAL DATA
  - Last name (user.last_name, String)
+ - - Last name must have at least 1 character and contain only letters
  - Is Admin True/ False (user.is_admin, Boolean, default=False)
+ - - Is Admin only accepts boolean values, True (true, 1) or False (false, 0) 
 
 ### REQUEST BODY EXAMPLE 
 
@@ -241,7 +250,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */author/\<int:id\>*
+## */author/\<int:author.id\>*
 
 ### Description
 - Return an authors in the database by ID.
@@ -298,7 +307,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */author/first_name*
+## */author/first_name/\<string:author.first_name\>*
 
 ### Description
 - Return a list of authors in the database by their first name.
@@ -357,7 +366,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */author/last_name*
+## */author/last_name/\<string:author.last_name\>*
 
 ### Description
 - Return a list of authors in the database by their last name.
@@ -432,11 +441,15 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### REQUIRED DATA
  - First name (author.first_name, String)
+ - - First name must have at least 1 character and contain only letters
  - Last name (author.last_name, String)
+ - - Last name must have at least 1 character and contain only letters
 
 ### OPTIONAL DATA
  - About (author.about, Text)
+ - - Author about must be longer than 1 character
  - Accolades (author.accolades, Text)
+ - - Author accolades must be longer than 1 character
 
 ### REQUEST BODY EXAMPLE 
 
@@ -467,7 +480,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */author/\<int:id\>*
+## */author/\<int:author.id\>*
 
 ### Description
 - Update an author resource in your database.
@@ -478,7 +491,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Authorisation as admin required through JWT Bearer Token  
 
 ### METHOD
- - POST, PATCH
+ - PUT, PATCH
 
 ### EXAMPLE
  - /author/7
@@ -521,7 +534,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */author/\<int:id\>*
+## */author/\<int:author.id\>*
 
 ### Description
 - Delete an author resource in your database, inlcuding all of their books.
@@ -917,7 +930,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */books/fiction/\<string:books.is_fiction\>*
+## */books/fiction/\<boolean:books.is_fiction\>*
 
 ### Description
 - Return all book entities classed as Fiction or Non Fiction depending on aurgument sent. 
@@ -999,10 +1012,15 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ### REQUIRED DATA
  - Title (book.title, String)
+ - - Titles must have at least 1 character
  - Author ID (author.id, Integer)
+ - - Author ID must be an integer
  - Category ID (category.id, Integer)
+ - - Category ID must be an integer
  - Is Fiction Indicator (book.is_fiction, Boolean)
+ - - Is Fiction only accepts boolean values, True (true, 1) or False (false, 0)
  - In Store Number (book.in_store, Integer)
+ - - In Store must be an integer
 
 ### OPTIONAL DATA
  - None
@@ -1056,7 +1074,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Authorisation as admin required through JWT Bearer Token
 
 ### METHOD
- - POST, PATCH
+ - PUT, PATCH
 
 ### EXAMPLE
  - /books/4
@@ -1073,7 +1091,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Category ID (category.id, Integer)
  - Is Fiction Indicator (book.is_fiction, Boolean)
  - In Store Number (book.in_store, Integer)
- - 
+  
 ### REQUEST BODY EXAMPLE
 
 ```py
@@ -1140,6 +1158,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ### REQUIRED DATA
  - Comment Body (comment.body, Text)
+ - - Comment body name must be longer than 1 character
 
 ### OPTIONAL DATA
  - None
@@ -1278,7 +1297,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */categories/\<int:id\>*
+## */categories/\<int:category.id\>*
 
 ### Description
 - Return a category entity stored in the database from it's ID. 
@@ -1321,7 +1340,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */categories/\<string:name\>*
+## */categories/\<string:category.name\>*
 
 ### Description
 - Return a category entity stored in the database from it's name. 
@@ -1394,7 +1413,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ```py
 {
-    "name": "Test Categpry",
+    "name": "Test Category",
     "description": "Test category description"
 }
 ```
@@ -1414,7 +1433,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */categories\<int:id\>*
+## */categories\<int:category.id\>*
 
 ### Description
 - Update a category entity in the database using it's ID. 
@@ -1425,7 +1444,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Authorisation as admin required through JWT Bearer Token
 
 ### METHOD
- - POST, PATCH
+ - PUT, PATCH
 
 ### EXAMPLE
  - /categories/6
@@ -1438,7 +1457,9 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### OPTIONAL DATA
  - Category Name (category.name, String)
+ - - Category name must be longer than 1 character
  - Description (category.description, String)
+ - - Category description must be longer than 1 character
 
 ### REQUEST BODY EXAMPLE
 
@@ -1464,7 +1485,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */categories\<int:id\>*
+## */categories\<int:category.id\>*
 
 ### Description
 - Delete a category entity in the database using it's ID. 
@@ -1579,7 +1600,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */comments/\<int:id\>*
+## */comments/\<int:comment.id\>*
 
 ### Description
 - Return a specific comment by ID.
@@ -1632,7 +1653,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */comments/user/\<int:user_id\>*
+## */comments/user/\<int:comment.user_id\>*
 
 ### Description
 - Return all comments made by a specific user.
@@ -1685,7 +1706,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ---
 
-## */comments/\<int:id\>*
+## */comments/\<int:comment.id\>*
 
 ### Description
 - Update the body text of a specific comment, by ID.
@@ -1706,6 +1727,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ### REQUIRED DATA
  - Comment Body (comment.body, Text)
+ - - Comment body name must be longer than 1 character
 
 ### OPTIONAL DATA
  - None
@@ -1742,7 +1764,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
   
 ---
 
-## */comments/\<int:id\>*
+## */comments/\<int:comment.id\>*
 
 ### Description
 - Delete a specific comment, by ID.
@@ -1844,7 +1866,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 ---
 ---
 
-## */users/\<int:id\>*
+## */users/\<int:user.id\>*
 
 ### Description
 - Return a user entity stored in the database from it's ID. 
@@ -1889,7 +1911,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */users/first_name/\<string:name\>*
+## */users/first_name/\<string:user.first_name\>*
 
 ### Description
 - Return a user entity stored in the database from it's first name. 
@@ -1907,6 +1929,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### ARGUMENTS
  - First Name (user.first_name, String)
+ - - First name must have at least 1 character and contain only letters
   
 ### REQUIRED DATA
  - None
@@ -1934,7 +1957,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */users/last_name/\<string:name\>*
+## */users/last_name/\<string:user.last_name\>*
 
 ### Description
 - Return a user entity stored in the database from it's last name. 
@@ -1952,6 +1975,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ### ARGUMENTS
  - Last Name (user.last_name, String)
+ - - Last name must have at least 1 character and contain only letters
   
 ### REQUIRED DATA
  - None
@@ -1983,7 +2007,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */users\<int:id\>*
+## */users\<int:user.id\>*
 
 ### Description
 - Update a user entity in the database using it's ID. 
@@ -1994,22 +2018,26 @@ Some issues with ORMs are that it can slow down the execution of queries compare
  - Authorisation as admin required through JWT Bearer Token
 
 ### METHOD
- - POST, PATCH
+ - PUT, PATCH
 
 ### EXAMPLE
  - /user/1
 
 ### ARGUMENTS
  - User ID (user.id, Integer)
- - 
+  
 ### REQUIRED DATA
 - None
   
 ### OPTIONAL DATA
  - First Name (user.first_name, String)
+ - - First name must have at least 1 character and contain only letters
  - Last Name (user.last_name, String)
+ - - Last name must have at least 1 character and contain only letters
  - Email Address (user.email, String)
+ - - Email address must have at least 6 characters, contain only letters, numbers, @ and . symbols, within the pattern example@example.com 
  - Password (user.password, String)
+ - - Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
 
 ### REQUEST BODY EXAMPLE
 
@@ -2036,7 +2064,7 @@ Some issues with ORMs are that it can slow down the execution of queries compare
 
 ---
 
-## */users\<int:id\>*
+## */users\<int:user.id\>*
 
 ### Description
 - Delete a user entity in the database using it's ID. 
@@ -2325,7 +2353,7 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 ### Relationships
 
-- comments – Allowing attributes from the linked Comment Model to be used within User entities. 
+- comments – Allowing attributes from the linked Comment Model to be used within User entities. This comments relationship has cascade delete linked to the User entity, so if a User entity is deleted, all the comments associated will also be deleted.
 
 ### Return Order of Attributes
 

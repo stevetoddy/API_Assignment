@@ -71,18 +71,25 @@ def create_category():
     # Loading requests through schema for validation 
     data = CategorySchema().load(request.json)
     
-    category = Category(
-        name = data['name'],
-        description = data['description']
-    )
+    # Query to find category by name
+    stmt = db.select(Category).filter_by(name=data['name'])
+    category = db.session.scalar(stmt)
 
-    # Add and commit author to database
-    db.session.add(category)
-    db.session.commit()
+    # If no books are found under that title
+    if not category:
+        category = Category(
+            name = data['name'],
+            description = data['description']
+        )
 
-    # Respond to client with new category
-    return CategorySchema().dump(category), 201
+        # Add and commit author to database
+        db.session.add(category)
+        db.session.commit()
 
+        # Respond to client with new category
+        return CategorySchema().dump(category), 201
+    else:
+        return {'error': f'Category with that name already exists'}, 404
 
 # Update a category by ID (need to be admin)
 @categories_bp.route('/<int:id>/', methods=['PUT', 'PATCH'])

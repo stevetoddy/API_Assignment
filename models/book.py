@@ -32,7 +32,14 @@ class BookSchema(ma.Schema):
     # Titles must have at least 1 character
     title = fields.String(required=True, validate=
         Length(min=1, error="Title must be at least 1 character long"))
-    
+    # Is Fiction only accepts boolean values, True (true, 1) or False (false, 0)
+    is_fiction = fields.Boolean(required=True)
+    # In Store must be an integer
+    in_store = fields.Integer(required=True) 
+    # Author ID must be an integer
+    author_id = fields.Integer(required=True) 
+    # Category ID must be an integer
+    category_id = fields.Integer(required=True) 
 
     class Meta:
         fields = ('id', 'title', 'author_id', 'author', 'category_id', 'category', 'is_fiction', 'in_store', 'comments')
