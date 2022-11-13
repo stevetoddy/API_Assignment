@@ -35,19 +35,19 @@ def seed_db():
             first_name = 'Brandon',
             last_name = 'Sanderson',
             accolades = 'Sanderson has been nominated for and also won multiple awards for his various works, including being nominated for four Hugo awards, winning one, and being nominated for 5 David Gemmell Legend Awards, winning two',
-            about = 'Brandon Sanderson is an American author of epic fantasy and science fiction. He is best known for the Cosmere fictional universe, in which most of his fantasy novels, most notably the Mistborn series and The Stormlight Archive, are set.'
+            about = 'Brandon Sanderson is an American author of epic fantasy and science fiction.'
         ),        
         Author(
             first_name = 'Dr',
             last_name = 'Seuss',
             accolades = 'His work includes many of the most popular children\'s books of all time, selling over 600 million copies and being translated into more than 20 languages by the time of his death.',
-            about = 'Theodor Seuss Geisel was an American children\'s author and cartoonist. He is known for his work writing and illustrating more than 60 books under the pen name Dr. Seuss. '
+            about = 'Theodor Seuss Geisel was an American children\'s author and cartoonist.'
         ),        
         Author(
             first_name = 'Joseph',
             last_name = 'Heller',
             accolades = 'Although Catch-22 won no awards, it has remained consistently in print and, since publication, has sold more than 10m copies.',
-            about = 'Joseph Heller was an American author of novels, short stories, plays, and screenplays. His best-known work is the 1961 novel Catch-22, a satire on war and bureaucracy, whose title has become a synonym for an absurd or contradictory choice.'
+            about = 'Joseph Heller was an American author of novels, short stories, plays, and screenplays. His best-known work is the 1961 novel Catch-22.'
         ),
         Author(
             first_name = 'Iain',

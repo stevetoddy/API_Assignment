@@ -2188,6 +2188,8 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 ## Author Model
 
+![Author Model](Images/author_model.png)
+
 ### Attributes  
 
 - id (Integer, Primary Key)
@@ -2202,6 +2204,8 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 
 ## Author Schemas 
+
+![Author Schema](Images/author_schema.png)
 
 ### Return Order of Attributes
 
@@ -2228,6 +2232,8 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 ## Book Model
 
+![Book Model](Images/book_model.png)
+
 ### Attributes
 
 - id (Integer, Primary Key)
@@ -2245,6 +2251,10 @@ All Schemas are also used to pass input data through for validation, and if vali
 - author – Allowing attributes from the linked Author Model to be used within Book entities.
 - category – Allowing attributes from the linked Category Model to be used within Book entities.
 - comments – Allowing attributes from the linked Comment Model to be used within Book entities. This comments relationship has cascade delete linked to the Book entity, so if a Book entity is deleted, all the comments associated will also be deleted.
+
+## Book Schemas
+
+![Book Model](Images/book_model.png)
 
 ### Return Order of Attributes
 
@@ -2276,8 +2286,9 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 - The ‘title’ validation states it is a required field and must have at least 1 character.
 
-
 ## Category Model
+
+![Category Model](Images/category_model.png)
 
 ### Attributes  
 
@@ -2288,6 +2299,10 @@ All Schemas are also used to pass input data through for validation, and if vali
 ### Relationships
 
 - books – Allowing attributes from the linked Book Model to be used within Category entities. This books relationship has cascade delete linked to the Category entity, so if a Category entity is deleted, all the books associated will also be deleted.
+
+## Category Schemas
+
+![Category Schema](Images/category_schema.png)
 
 ### Return Order of Attributes
 
@@ -2301,6 +2316,8 @@ All Schemas are also used to pass input data through for validation, and if vali
 - The ‘description’ validation states it is a required field and must have at least 2 character.
 
 ## Comment Model
+
+![Comment Model](Images/comment_model.png)
 
 ### Attributes 
 
@@ -2316,6 +2333,10 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 - user – Allowing attributes from the linked User Model to be used within Comment entities.
 - book – Allowing attributes from the linked Book Model to be used within Comment entities.
+
+## Comment Schema
+
+![Comment Schema](Images/comment_schema.png)
 
 ### Return Order of Attributes
 
@@ -2342,6 +2363,8 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 ## User Model
 
+![User Model](Images/user_model.png)
+
 ### Attributes  
 
 - id (Integer, Primary Key)
@@ -2354,6 +2377,10 @@ All Schemas are also used to pass input data through for validation, and if vali
 ### Relationships
 
 - comments – Allowing attributes from the linked Comment Model to be used within User entities. This comments relationship has cascade delete linked to the User entity, so if a User entity is deleted, all the comments associated will also be deleted.
+
+## User Schemas
+
+![User Schema](Images/user_schema.png)
 
 ### Return Order of Attributes
 
@@ -2377,15 +2404,27 @@ All Schemas are also used to pass input data through for validation, and if vali
 
 ## R9 - Discuss the database relations to be implemented in your application
 
-My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the table’s Primary Key, the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50), NOT NULL), last name (String, varchar(50)), the users email address which must be unique (String, NOT NULL, unique=True), a password (String, NOT NULL) and whether the user has Admin access or not (Boolean, NOT NULL, Default=FALSE).  
+![Book Store Table](Images/tables_book_store.png)
+
+My book store database will be tracking several entities which I will describe here. It will have a ‘Users’ table, which will contain attributes such as the table’s Primary Key, the unique User ID (Integer, NOT NULL), the users first name (String, varchar(50), NOT NULL), last name (String, varchar(50)), the users email address which must be unique (String, NOT NULL, unique=True), a password (String, NOT NULL) and whether the user has Admin access or not (Boolean, NOT NULL, Default=FALSE). 
+
+![Users Table](Images/users_table.png)
 
 The second table will be ‘Books’, with attributes such as the table’s Primary Key, the unique Book ID (Integer, NOT NULL), the books title (String, varchar(200), NOT NULL), if it is fiction (Boolean) and the number of copies in store (Integer). The ‘Books’ table will also have two Foreign Keys, an Author ID (Integer, NOT NULL), which will connect to a table called ‘Authors’ with a one and only one on the authors side to an optional many on the books side, and a Category ID (Integer, NOT NULL), which will connect to a table called ‘Categories’ with a one and only one on the categories side to an optional many on the books side.  
 
+![Books Table](Images/books_table.png)
+
 The ‘Authors’ table will contain the attributes about the author, such as the table’s Primary Key, the unique Author ID (Integer, NOT NULL), the author’s first name (String, varchar(50), NOT NULL), last name (String, varchar(50), NOT NULL), any accolades they may have garnered (Text) and a short description called ‘about’ (Text).  
+
+![Authors Table](Images/authors_table.png)
 
 The ‘Categories’ table will contain attributes such as the table’s Primary Key, the unique Category ID (Integer, NOT NULL), the category name (String, varchar(100), NOT NULL) and a short description about the category called ‘description’ (Text, NOT NULL).  
 
-The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment body (Text), and two foreign keys, the User ID (Integer, NOT NULL) of the user that has created the comment, and the Book ID (Integer, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side.  
+![Categories Table](Images/categories_table.png)
+
+The final table is a joining table between the ‘Books’ table and the ‘Users’ table, called ‘Comments’. The ‘Comments’ table will contain attributes such as the table’s Primary Key, the unique Comment ID (Integer, NOT NULL), the comment body (Text), and two foreign keys, the User ID (Integer, Foreign Key, NOT NULL) of the user that has created the comment, and the Book ID (Integer, Foreign Key, NOT NULL) of the book the comment is about. The ‘Comments’ table will connect to the ‘Users’ table with a one and only one on the users side to an optional many on the comments side, and it will connect to the ‘Books’ table with a one and only one on the books side to an optional many on the comments side. 
+
+![Comments Table](Images/comments_table.png)
 
 ## R10 - Describe the way tasks are allocated and tracked in your project
 

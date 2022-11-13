@@ -16,7 +16,6 @@ class Comment(db.Model):
     user = db.relationship('User', back_populates='comments')
     book = db.relationship('Book', back_populates='comments')
 
-    
 
 # Marshmallow schemas 
 class CommentSchema(ma.Schema):

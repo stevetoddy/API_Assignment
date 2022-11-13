@@ -34,13 +34,10 @@ class UserSchema(ma.Schema):
 
     # Password must be between 8 and 20 characters long, include at least 1 uppercase and 1 lowercase letter, a number and a special character
     password = fields.String(required=True, validate= 
-        Regexp('^(?=\S{8,20}$)(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[^A-Za-z\s0-9])', error="Users's password must be between 8 and 20 characters long, must include a number and a special character"))
+        Regexp('^(?=\S{8,20}$)(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[^A-Za-z\s0-9])', 
+        error="Users's password must be between 8 and 20 characters long, must include a number and a special character"))
 
 
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'email', 'password', 'is_admin')
         ordered = True
-
-
-
-# Is Admin only accepts boolean values, True (true, 1) or False (false, 0)
