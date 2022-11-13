@@ -2113,65 +2113,62 @@ This is my ERD for my Book Store application.
 ## R7 - Detail all third party services the app uses
 
 ### Flask
-“Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. It began as a simple wrapper around Werkzeug and Jinja and has become one of the most popular Python web application frameworks. Flask offers suggestions, but doesn’t enforce any dependencies or project layout. It is up to the developer to choose the tools and libraries they want to use. There are many extensions provided by the community that make adding new functionality easy.” 
-- Direct quote referenced from https://pypi.org/project/Flask/
+“Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. It began as a simple wrapper around Werkzeug and Jinja and has become one of the most popular Python web application frameworks. Flask offers suggestions, but doesn’t enforce any dependencies or project layout. It is up to the developer to choose the tools and libraries they want to use. There are many extensions provided by the community that make adding new functionality easy.” - Direct quote referenced from https://pypi.org/project/Flask/
+
+- Documentation: https://flask.palletsprojects.com/en/2.2.x/
 
 ### Marshmallow
-“Marshmallow is an ORM/ODM/framework-agnostic library for converting complex data types, such as objects, to and from native Python data types.” 
-- Direct quote referenced from https://marshmallow.readthedocs.io/en/stable/
+“Marshmallow is an ORM/ODM/framework-agnostic library for converting complex data types, such as objects, to and from native Python data types.” - Direct quote referenced from https://marshmallow.readthedocs.io/en/stable/
+- Documentation: https://marshmallow.readthedocs.io/en/stable/
+
+
 
 ### Flask-Marshmallow
-“Flask-Marshmallow is a thin integration layer for Flask and marshmallow (an object serialization/deserialization library) that adds additional features to marshmallow, including URL and Hyperlinks fields for HATEOAS-ready APIs. It also (optionally) integrates with Flask-SQLAlchemy.”
-- Direct quote referenced from https://flask-marshmallow.readthedocs.io/en/latest/
+“Flask-Marshmallow is a thin integration layer for Flask and marshmallow (an object serialization/deserialization library) that adds additional features to marshmallow, including URL and Hyperlinks fields for HATEOAS-ready APIs. It also (optionally) integrates with Flask-SQLAlchemy.” - Direct quote referenced from https://flask-marshmallow.readthedocs.io/en/latest/
+- Documentation: https://flask-marshmallow.readthedocs.io/en/latest/
 
 ### SQLAlchemy
-“SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL. It provides a full suite of well known enterprise-level persistence patterns, designed for efficient and high-performing database access, adapted into a simple and Pythonic domain language.”
-- Direct quote referenced from https://www.sqlalchemy.org/
+“SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL. It provides a full suite of well known enterprise-level persistence patterns, designed for efficient and high-performing database access, adapted into a simple and Pythonic domain language." - Direct quote referenced from https://www.sqlalchemy.org/
+- Documentation: https://docs.sqlalchemy.org/en/14/
 
 ### Flask-SQLAlchemy
 
-“Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to your application. It simplifies using SQLAlchemy with Flask by setting up common objects and patterns for using those objects, such as a session tied to each web request, models, and engines.”
-
-- Direct quote referenced from https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/
+“Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to your application. It simplifies using SQLAlchemy with Flask by setting up common objects and patterns for using those objects, such as a session tied to each web request, models, and engines.” - Direct quote referenced from https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/
+- Documentation: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/
 
 ### bycrypt
 
-“bcrypt is a password-hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher and presented at USENIX in 1999.”
-
-- Direct quote referenced from https://en.wikipedia.org/wiki/Bcrypt
+“bcrypt is a password-hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher and presented at USENIX in 1999.” - Direct quote referenced from https://en.wikipedia.org/wiki/Bcrypt
 
 ### Flask-Bcrypt
 
-“Flask-Bcrypt is a Flask extension that provides bcrypt hashing utilities for your application. Due to the recent increased prevalence of powerful hardware, such as modern GPUs, hashes have become increasingly easy to crack. A proactive solution to this is to use a hash that was designed to be “de-optimized”. Bcrypt is such a hashing facility; unlike hashing algorithms such as MD5 and SHA1, which are optimized for speed, bcrypt is intentionally structured to be slow. For sensitive data that must be protected, such as passwords, bcrypt is an advisable choice.”
-- Direct quote referenced from https://flask-bcrypt.readthedocs.io/en/1.0.1/
+“Flask-Bcrypt is a Flask extension that provides bcrypt hashing utilities for your application. Due to the recent increased prevalence of powerful hardware, such as modern GPUs, hashes have become increasingly easy to crack. A proactive solution to this is to use a hash that was designed to be “de-optimized”. Bcrypt is such a hashing facility; unlike hashing algorithms such as MD5 and SHA1, which are optimized for speed, bcrypt is intentionally structured to be slow. For sensitive data that must be protected, such as passwords, bcrypt is an advisable choice.” - Direct quote referenced from https://flask-bcrypt.readthedocs.io/en/1.0.1/
+- Documentation: https://flask-bcrypt.readthedocs.io/en/1.0.1/
 
 
 ### jwt-extended
 
-“In its simplest form, there is not much to using this extension. You use create_access_token() to make JSON Web Tokens, jwt_required() to protect routes, and get_jwt_identity() to get the identity of a JWT in a protected route.”
-
-- Direct quote referenced from https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/
+“In its simplest form, there is not much to using this extension. You use create_access_token() to make JSON Web Tokens, jwt_required() to protect routes, and get_jwt_identity() to get the identity of a JWT in a protected route.” - Direct quote referenced from https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/
+- Documentation: https://flask-jwt-extended.readthedocs.io/en/stable/
 
 
 ### Psycopg – PostgreSQL database adaptor for Python (psycopg2)
 
-Psycopg is the most popular PostgreSQL database adaptor for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was designed for heavily multi-threaded applications that create and destroy lots of cursors and make a large number of concurrent INSERTs or UPDATEs.
-
-- Direct quote referenced from https://flask-bcrypt.readthedocs.io/en/1.0.1/
+"Psycopg is the most popular PostgreSQL database adaptor for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was designed for heavily multi-threaded applications that create and destroy lots of cursors and make a large number of concurrent INSERTs or UPDATEs." - Direct quote referenced from https://flask-bcrypt.readthedocs.io/en/1.0.1/
+- Documentation: https://www.psycopg.org/docs/
 
 
 ### python-dotenv
 
-“Python-dotenv reads key-value pairs from a .env file and can set them as environment variables. It helps in the development of applications following the 12-factor principles.”
-
-- Direct quote referenced from https://pypi.org/project/python-dotenv/
+“Python-dotenv reads key-value pairs from a .env file and can set them as environment variables. It helps in the development of applications following the 12-factor principles.” - Direct quote referenced from https://pypi.org/project/python-dotenv/
+- Documentation: https://github.com/theskumar/python-dotenv
 
 
 ### PostgreSQL
 
-“PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.”
+“PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.” - Direct quote referenced from https://www.postgresql.org/
+- Documentation: https://www.postgresql.org/docs/
 
-- Direct quote referenced from https://www.postgresql.org/
 ---
 
 ## R8 - Describe the projects MODELS in terms of the relationship they have with each other
